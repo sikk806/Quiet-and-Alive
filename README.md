@@ -1,4 +1,4 @@
-<div align=center>
+
   
 # 🤫 Quiet-and-Alive 🤫
 
@@ -14,5 +14,5 @@
 | 1 | Something | ✅ |
   
 
-</div>
+
 
