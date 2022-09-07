@@ -10,8 +10,8 @@
 
 ## 🗓 Schedule 🗓
 
-  |Week|To Do|check|
-  |1|Something|✅|
+| Week | To Do | check |
+| 1 | Something | ✅ |
   
 
 </div>
