@@ -30,6 +30,7 @@
 ## 5. Github에 폴더 추가
 ![image](https://user-images.githubusercontent.com/54883267/190849949-0442e483-7a76-4d66-a5dc-846673353c7b.png)
 - 폴더를 만들 곳으로 들어간 후 Add File -> Create New File
+![image](https://user-images.githubusercontent.com/54883267/190850297-635856d0-946e-44f2-b7b8-bbb656dc3af3.png)
 ![image](https://user-images.githubusercontent.com/54883267/190849997-c32dd79e-84f1-48c2-86cc-d3c9a5fbeae3.png)
 - Name Your File에 파일명을 적은 후에 '/'를 붙여주면 사진과 같이 폴더가 만들어진다.
 ![image](https://user-images.githubusercontent.com/54883267/190850056-e5ce89e0-8c87-43ac-9df9-0bdfb5efa1e3.png)
