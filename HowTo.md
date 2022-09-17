@@ -2,7 +2,7 @@
 ![AddFile1](https://user-images.githubusercontent.com/54883267/190848958-ce31e5be-4e67-47dc-a9f4-7a0a331a1154.png)
 - Add File -> Upload Files
 ![image](https://user-images.githubusercontent.com/54883267/190849077-2b4d30a2-34f8-4008-a05d-917991c3cef7.png)
-- 올리고자 하는 파일을 드래그 앤 드롭
+- 올리고자 하는 파일을 __드래그 앤 드롭__
 ![AddFile3](https://user-images.githubusercontent.com/54883267/190849155-6128073a-6e8c-40e5-90cd-1722f8ffc9a6.png)
 - 업로드 된 파일명 확인한 후 __Commit Changes__
 
@@ -38,5 +38,5 @@
 - 폴더 생성 완료!
 
 ## 주의사항
-1. 같은 파일 및 폴더를 동시에 Commit Changes 하지 말아야합니다. (충돌이 일어나서 파일들을 되돌려야할 수 있습니다.)
-2. 폴더 안에 아무 파일 또는 폴더가 없으면 폴더가 삭제됩니다. 폴더를 남기고 싶은 경우에는 아무 파일 하나 만든 후에 다른 파일들을 삭제해주세요.
+1. 같은 파일 및 폴더를 __동시에 Commit Changes__ 하지 말아야합니다. (충돌이 일어나서 파일들을 되돌려야할 수 있습니다.)
+2. 폴더 안에 아무 파일 또는 폴더가 없으면 폴더가 삭제됩니다. 폴더를 남기고 싶은 경우에는 아무 __파일 하나 만든 후__ 다른 파일들을 삭제해주세요.
