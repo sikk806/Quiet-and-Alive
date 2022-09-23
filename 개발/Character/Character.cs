@@ -30,7 +30,11 @@ public class Character : MonoBehaviour
         }
 
         // ÁÂ¿ì ¹öÆ°
-        if(Input.GetButton("Horizontal"))
+        if(Input.GetButtonDown("Horizontal"))
+        {
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x*10.0f, rigid.velocity.y);
+        }
+        if (Input.GetButtonUp("Horizontal"))
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x, rigid.velocity.y);
         }
