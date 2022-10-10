@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PortalThroatToBody : MonoBehaviour
+public class PortalBottomToHeart : MonoBehaviour
 {
-    public bool playerIsClose;
+    // Start is called before the first frame update
+
+    private bool playerIsClose;
     public Character player;
 
     void Start()
     {
         player = FindObjectOfType<Character>();
     }
+
     // Start is called before the first frame update
     void Update()
     {
@@ -45,6 +48,7 @@ public class PortalThroatToBody : MonoBehaviour
 
     void PlayerRePosition()
     {
-        player.transform.position = new Vector2(0, -53.0f);
+        player.transform.position = new Vector2(-66.0f, -140.0f);
     }
 }
+

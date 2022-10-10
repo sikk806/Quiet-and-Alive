@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
         SceneName = SceneManager.GetActiveScene().name;
         // horizontal 입력 받아서 움직이는 코드
         h = Input.GetAxisRaw("Horizontal");
-        if (SceneName == "In_Body")
+        if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             // 도서관 에서의 Jump 삭제
             anim.SetBool("isJump", false);
@@ -130,7 +130,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (SceneName == "In_Body")
+        if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             rigid.gravityScale = 0;
             if(h != 0)

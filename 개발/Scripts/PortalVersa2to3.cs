@@ -8,6 +8,11 @@ public class PortalVersa2to3 : MonoBehaviour
     private bool playerIsClose;
     public Character player;
 
+    void Start()
+    {
+        player = FindObjectOfType<Character>();
+    }
+
     // Start is called before the first frame update
     void Update()
     {

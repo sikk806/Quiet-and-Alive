@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PortalThroatToBody : MonoBehaviour
+public class PortalLib2ToMirror : MonoBehaviour
 {
     public bool playerIsClose;
     public Character player;
@@ -12,7 +12,7 @@ public class PortalThroatToBody : MonoBehaviour
     {
         player = FindObjectOfType<Character>();
     }
-    // Start is called before the first frame update
+
     void Update()
     {
         if (playerIsClose == true)
@@ -23,6 +23,7 @@ public class PortalThroatToBody : MonoBehaviour
                 {
                     PlayerRePosition();
                 }
+                LoadScene();
             }
         }
     }
@@ -43,8 +44,13 @@ public class PortalThroatToBody : MonoBehaviour
         }
     }
 
+    void LoadScene()
+    {
+        SceneManager.LoadScene("MirrorPlace");
+    }
+
     void PlayerRePosition()
     {
-        player.transform.position = new Vector2(0, -53.0f);
+        player.transform.position = new Vector2(4.0f, -20.0f);
     }
 }

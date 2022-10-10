@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PortalThroatToBody : MonoBehaviour
+public class PortalLib1ToLib2 : MonoBehaviour
 {
     public bool playerIsClose;
     public Character player;
@@ -12,6 +12,8 @@ public class PortalThroatToBody : MonoBehaviour
     {
         player = FindObjectOfType<Character>();
     }
+
+
     // Start is called before the first frame update
     void Update()
     {
@@ -23,6 +25,7 @@ public class PortalThroatToBody : MonoBehaviour
                 {
                     PlayerRePosition();
                 }
+                LoadScene();
             }
         }
     }
@@ -43,8 +46,13 @@ public class PortalThroatToBody : MonoBehaviour
         }
     }
 
+    void LoadScene()
+    {
+        SceneManager.LoadScene("Library2");
+    }
+
     void PlayerRePosition()
     {
-        player.transform.position = new Vector2(0, -53.0f);
+        player.transform.position = new Vector2(-29.0f, -8.0f);
     }
 }
