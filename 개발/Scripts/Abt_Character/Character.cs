@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
+
+
+
     float h;
     float keep_h;
     float v;
@@ -97,10 +101,8 @@ public class Character : MonoBehaviour
 
             if (Input.GetButton("Jump"))
             {
-                Debug.Log("check-press");
                 anim.SetBool("isJump", true);
                 //jumping = true;
-                Debug.Log(rigid.velocity.y);
             }
 
             // **********************************************
@@ -114,8 +116,6 @@ public class Character : MonoBehaviour
                 anim.SetBool("isJump", false);
                 //jumping = false;
             }
-
-            Debug.Log(rigid.velocity.y);
         }
         else
         {
@@ -164,7 +164,7 @@ public class Character : MonoBehaviour
             }
         }
 
-        // InterAction UI
+        
         
     }
 
