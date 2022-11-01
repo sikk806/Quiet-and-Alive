@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     float v;
     public float maxSpeed;
     public float jumpPower;
+    public bool talking = false; // 대화중에는 방향키 금지
     private string SceneName = "";
     private bool jumping = false; // 한쪽 방향으로만 점프 유지
     private bool pressJump = false; // 더블 점프 방지
@@ -44,14 +45,22 @@ public class Character : MonoBehaviour
         {
             h = keep_h;
         }
+        if(talking)
+        {
+            h = 0;
+        }
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             // 도서관 에서의 Jump 삭제
-            anim.SetBool("isJump", false);
+            /*anim.SetBool("isJump", false);*/
             pressJump = false;
 
             //위, 아래
             v = Input.GetAxisRaw("Vertical");
+            if(talking)
+            {
+                v = 0;
+            }
 
             if (Input.GetButton("Horizontal"))
             {
@@ -60,39 +69,64 @@ public class Character : MonoBehaviour
 
             // 좌 / 우
             //Debug.Log("vel.x : " + rigid.velocity.x);
-            if (Mathf.Abs(rigid.velocity.x) < 0.3)
+            if (Mathf.Abs(rigid.velocity.x) < 0.3 && !jumping)
             {
                 anim.SetBool("isWalk", false);
             }
-            else
+            else if(Mathf.Abs(rigid.velocity.x) >= 0.3 && !jumping)
             {
                 anim.SetBool("isWalk", true);
             }
 
             // 위 / 아래
-            if((rigid.velocity.y) > 0)
+            if ((rigid.velocity.y) > 0 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkBack", true);
             }
-            else if ((rigid.velocity.y) < 0)
+            else if ((rigid.velocity.y) < 0 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkFront", true);
             }
-            else
+            else if ((rigid.velocity.y) == 0 && !jumping)
             {
                 anim.SetBool("WalkBack", false);
                 anim.SetBool("WalkFront", false);
             }
 
+            if (Input.GetButton("Jump"))
+            {
+                Debug.Log("check-press");
+                anim.SetBool("isJump", true);
+                //jumping = true;
+                Debug.Log(rigid.velocity.y);
+            }
+
+            // **********************************************
+            // JUMP 높이 바꾸고 애니메이션이 이상할때 바꿔볼것
+            // **********************************************
+            else if (rigid.velocity.y <= -18.5f && jumping)
+            {
+
+                Debug.Log("check : " + rigid.velocity.y);
+                Debug.Log("check-not jump");
+                anim.SetBool("isJump", false);
+                //jumping = false;
+            }
+
+            Debug.Log(rigid.velocity.y);
         }
         else
         {
-
-            if (Input.GetButtonDown("Jump") && pressJump == false)
+            
+            if (Input.GetButtonDown("Jump") && pressJump == false && !talking)
             {
                 rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            }
+            else if(talking)
+            {
+                
             }
 
             // 좌우 버튼
@@ -129,7 +163,9 @@ public class Character : MonoBehaviour
                 pressJump = false;
             }
         }
-            
+
+        // InterAction UI
+        
     }
 
     // Update is called once per frame
@@ -137,12 +173,11 @@ public class Character : MonoBehaviour
     {
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
-            //Debug.Log("pressJump : " + pressJump + " overJump : " + overJump + " Gravity : " + rigid.gravityScale);
             if (pressJump == false)
             {
                 rigid.gravityScale = 0;
             }
-            if(h != 0 && overJump == false)
+            if(h != 0)
             {
                 rigid.velocity = new Vector2(h * 10, 0);
             }
@@ -153,27 +188,21 @@ public class Character : MonoBehaviour
 
             if (Input.GetButton("Jump") && overJump == false)
             {
-                /*if(h != 0)
-                {
-                    jumping = true;
-                }*/
+                overJump = true;
+                jumping = true;
                 pressJump = true;
-                rigid.gravityScale = -100.0f;
-                /*if(rigid.gravityScale == -100.0f) {
-                    origin_Y = transform.position.y;
-                }*/
-                jumpTime += Time.deltaTime;
-                rigid.gravityScale += jumpTime * 200.0f;
-                if(rigid.gravityScale >= 100.0f)
-                {
-                    overJump = true;
-                }
             }
 
-            if(Input.GetButton("Jump") == false || rigid.gravityScale >= 98.0f)
+            if(jumping)
             {
-                Debug.Log("???? : " + Input.GetButton("Jump"));
-                // 위로 뜸
+                rigid.gravityScale = -100.0f;
+                jumpTime += Time.deltaTime;
+                rigid.gravityScale += jumpTime * 200.0f;
+            }
+
+            if(rigid.gravityScale >= 98.0f)
+            {
+                jumping = false;
                 jumpTime = 0.0f;
                 overJump = false;
                 pressJump = false;
