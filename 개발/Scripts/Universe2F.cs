@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Universe : MonoBehaviour
+public class Universe2F : MonoBehaviour
 {
     Character GameCharacter;
 
@@ -27,6 +27,6 @@ public class Universe : MonoBehaviour
             X = -9.0f;
         }
 
-        transform.position = new Vector3(X*0.3f, 12.0f, 10);
+        transform.position = new Vector3(X*0.3f, -4.0f, 10);
     }
 }
