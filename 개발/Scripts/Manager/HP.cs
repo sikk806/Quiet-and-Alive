@@ -11,9 +11,7 @@ public class HP : MonoBehaviour
 
     private float checkTime;
     private float maxHp = 100;
-    private float nowHp = 100;
-    private bool check = false;
-    private bool timeCheck = false;
+    public float nowHp = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -24,28 +22,11 @@ public class HP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!check && hp.value < 1)
+        if(Input.GetKeyDown(KeyCode.H))
         {
             nowHp = 100;
         }
-        if (Input.GetButtonDown("Submit") || check)
-        {
-            if (!timeCheck)
-            {
-                checkTime = Time.time;
-                timeCheck = true;
-            }
-            check = true;
-            if (Time.time - checkTime >= 1)
-            {
-                nowHp -= 10;
-                timeCheck = false;
-            }
-        }
-        if (Input.GetButtonUp("Submit"))
-        {
-            check = false;
-        }
+        
 
         renewHP();
     }

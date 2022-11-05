@@ -7,7 +7,8 @@ public class Fixed : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(854, 480, false);
+        //Screen.SetResolution(640, 480, false);
+        Debug.Log(Screen.height + " " + Screen.width);
     }
 
     // Update is called once per frame

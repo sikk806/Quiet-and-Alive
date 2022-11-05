@@ -17,6 +17,8 @@ public class CameraRange : MonoBehaviour
         CameraWidth = Camera.main.aspect * Camera.main.orthographicSize;
         CameraHeight = Camera.main.orthographicSize;
 
+        Debug.Log(CameraWidth + " " + CameraHeight);
+
         BackGround = GameObject.FindGameObjectWithTag("BackGround");
         bgSizeX = BackGround.GetComponent<Renderer>().bounds.size.x;
         bgSizeY = BackGround.GetComponent<Renderer>().bounds.size.y;
