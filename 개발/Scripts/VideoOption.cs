@@ -10,7 +10,7 @@ public class VideoOption : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        Screen.SetResolution(800, 600, false);
+        Screen.SetResolution(854, 480, false);
     }
 
     // Update is called once per frame

@@ -61,9 +61,12 @@ public class Monster : MonoBehaviour
             Vector2 direction = GameCharacter.transform.position - transform.position;
             direction.Normalize();
 
-            transform.position = Vector2.MoveTowards(this.transform.position, GameCharacter.transform.position, speed * Time.deltaTime);
+            Vector2 fixedY = new Vector2(GameCharacter.transform.position.x, this.transform.position.y);
 
-            if(playerIsClose || check)
+            //transform.position = Vector2.MoveTowards(this.transform.position, GameCharacter.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(this.transform.position, fixedY, speed * Time.deltaTime);
+
+            if (playerIsClose || check)
             {
                 if (!timeCheck)
                 {
