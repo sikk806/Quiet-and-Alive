@@ -13,6 +13,8 @@ public class HP : MonoBehaviour
     private float maxHp = 100;
     public float nowHp = 100;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,7 @@ public class HP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(Input.GetKeyDown(KeyCode.H))
         {
             nowHp = 100;

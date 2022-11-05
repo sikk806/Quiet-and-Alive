@@ -76,7 +76,7 @@ public class Monster : MonoBehaviour
                 check = true;
                 if (Time.time - checkTime >= 1)
                 {
-                    HP.nowHp -= 10;
+                    HP.nowHp -= 50;
                     timeCheck = false;
                 }
             }

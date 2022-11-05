@@ -4,21 +4,29 @@ using UnityEngine;
 
 public class Universe : MonoBehaviour
 {
-    private GameObject player;
+    Character GameCharacter;
+
     private float X, Y;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("MainCamera");
+        GameCharacter = GameObject.Find("Character").GetComponent<Character>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        X = player.transform.position.x;
-        Y = player.transform.position.y;
+        X = GameCharacter.transform.position.x;
+        if(X > 21.3f)
+        {
+            X = 21.3f;
+        }
+        else if(X < -9.0f)
+        {
+            X = -9.0f;
+        }
 
-        transform.position = new Vector3(X, Y, 4);
+        transform.position = new Vector3(X*0.3f, 6.0f, 10);
     }
 }
