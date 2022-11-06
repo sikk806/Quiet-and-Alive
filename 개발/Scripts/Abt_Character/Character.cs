@@ -15,15 +15,16 @@ public class Character : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
     public bool talking = false; // 대화중에는 방향키 금지
+    public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
     private string SceneName = "";
     private bool jumping = false; // 한쪽 방향으로만 점프 유지
-    private bool pressJump = false; // 더블 점프 방지
     private bool overJump = false; // 쯔꾸르 떨어지면서 점프 시작 방지
     private float jumpTime = 0; // Jump 시간 측정
     private float origin_Y;
-    Rigidbody2D rigid;
+
+    public Animator anim;
+    public Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
-    Animator anim;
     AudioSource AudioSource;
 
     void Awake()

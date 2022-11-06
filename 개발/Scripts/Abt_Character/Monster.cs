@@ -22,14 +22,20 @@ public class Monster : MonoBehaviour
     public float speed;
     public float distanceBetween;
 
-    private HP HP;
+    //private HP HP;
 
     Character GameCharacter;
+    Animator anim;
+
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
-        HP = GameObject.Find("HP").GetComponent<HP>();
+        //HP = GameObject.Find("HP").GetComponent<HP>();
     }
 
     // Update is called once per frame
@@ -55,6 +61,11 @@ public class Monster : MonoBehaviour
             NextLine();
         }
 
+        if(playerIsClose)
+        {
+            anim.SetBool("Close", true);
+        }
+
         if(chasing)
         {
             distance = Vector2.Distance(transform.position, GameCharacter.transform.position);
@@ -76,7 +87,7 @@ public class Monster : MonoBehaviour
                 check = true;
                 if (Time.time - checkTime >= 1)
                 {
-                    HP.nowHp -= 50;
+                    //HP.nowHp -= 50;
                     timeCheck = false;
                 }
             }
