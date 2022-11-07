@@ -5,21 +5,25 @@ using UnityEngine;
 public class Ladder : MonoBehaviour
 {
     float v;
-    public bool CanGoUp = false;
+    //public bool CanGoUp = false;
     public bool isFalling = false;
-    
+
+    private HP HP;
+
     Character GameCharacter;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
+        HP = GameObject.Find("HP").GetComponent<HP>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(CanGoUp)
+        if(GameCharacter.CanGoUp)
         {
             if(GameCharacter.rigid.position.y > 0)
             {
@@ -31,35 +35,58 @@ public class Ladder : MonoBehaviour
             }
             GameCharacter.pressJump = true;
             v = Input.GetAxisRaw("Vertical");
-            if (Input.GetButtonDown("Vertical"))
+            if (Input.GetButton("Vertical"))
             {
+                /*if(GameCharacter.rigid.position.y <= 0)
+                {
+                    isFalling = false;
+                }*/
+                GameCharacter.anim.SetBool("GoIdle", false);
                 GameCharacter.rigid.gravityScale = 0;
                 GameCharacter.rigid.velocity = new Vector2(GameCharacter.rigid.velocity.x, GameCharacter.rigid.velocity.y * 10.0f);
+                GameCharacter.anim.SetBool("isClibing", true);
+                GameCharacter.anim.SetBool("StopClibing", false);
             }
             if(Input.GetButtonUp("Vertical"))
             {
                 GameCharacter.rigid.velocity = new Vector2(GameCharacter.rigid.velocity.x, GameCharacter.rigid.velocity.y);
+                GameCharacter.anim.SetBool("StopClibing", true);
             }
         }
         else
         {
             GameCharacter.rigid.gravityScale = 2;
+            if(GameCharacter.rigid.position.y > -6.0f)
+            {
+                GameCharacter.anim.SetBool("isClibing", false);
+                GameCharacter.anim.SetBool("StopClibing", false);
+            }
 
-            if(GameCharacter.rigid.position.y < -6.0f)
+            if(GameCharacter.rigid.position.y < -6.2f)
             {
                 GameCharacter.pressJump = false;
+                GameCharacter.anim.SetBool("isClibing", false);
+                GameCharacter.anim.SetBool("GoIdle", true);
                 if(isFalling)
                 {
-                    //대충 HP 깎이는 코드
+                    HP.nowHp -= 100;
                 }
                 isFalling = false;
+            }
+            if (Mathf.Abs(GameCharacter.rigid.velocity.x) < 0.1)
+            {
+                GameCharacter.anim.SetBool("isWalk", false);
+            }
+            else
+            {
+                GameCharacter.anim.SetBool("isWalk", true);
             }
         }
     }
 
     void FixedUpdate()
     {
-        if (CanGoUp)
+        if (GameCharacter.CanGoUp)
         {
             GameCharacter.rigid.velocity = new Vector2(GameCharacter.rigid.velocity.x, v * 10);
         }
@@ -69,7 +96,7 @@ public class Ladder : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            CanGoUp = true;
+            GameCharacter.CanGoUp = true;
         }
     }
 
@@ -77,7 +104,7 @@ public class Ladder : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            CanGoUp = false;
+            GameCharacter.CanGoUp = false;
         }
     }
 }

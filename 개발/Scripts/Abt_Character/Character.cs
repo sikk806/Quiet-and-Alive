@@ -14,18 +14,24 @@ public class Character : MonoBehaviour
     float v;
     public float maxSpeed;
     public float jumpPower;
+
+    public GameObject DestroyMonster;
     public bool talking = false; // 대화중에는 방향키 금지
     public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
+    public bool portalOnce = false;
+    public bool CanGoUp = false;
     private string SceneName = "";
     private bool jumping = false; // 한쪽 방향으로만 점프 유지
     private bool overJump = false; // 쯔꾸르 떨어지면서 점프 시작 방지
     private float jumpTime = 0; // Jump 시간 측정
     private float origin_Y;
+    //private Ladder Ladder;
 
     public Animator anim;
     public Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     AudioSource AudioSource;
+
 
     void Awake()
     {
@@ -38,7 +44,7 @@ public class Character : MonoBehaviour
 
     void Start()
     {
-        
+        //Ladder = GameObject.Find("Ladder").GetComponent<Ladder>();
     }
 
     void Update()
@@ -56,6 +62,21 @@ public class Character : MonoBehaviour
         {
             h = 0;
         }
+        if (SceneName == "Library1_2F" && portalOnce)
+        {
+            portalOnce = false;
+
+            //DestroyMonster = GameObject.Find("MonsterIdle");
+            //DestroyMonster.SetActive(false);
+            anim.SetBool("GoIdle", false);
+            anim.SetBool("isClibing", false);
+            anim.SetBool("StopClibing", false);
+            rigid.velocity = new Vector2(0, 0);
+        }
+        /*if(SceneName == "Library1" && portalOnce)
+        {
+            portalOnce = true;
+        }*/
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             // 도서관 에서의 Jump 삭제
@@ -122,7 +143,6 @@ public class Character : MonoBehaviour
         }
         else
         {
-            
             if (Input.GetButtonDown("Jump") && pressJump == false && !talking)
             {
                 AudioSource.Play();
@@ -148,7 +168,11 @@ public class Character : MonoBehaviour
             {
                 spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
             }
-            if (Mathf.Abs(rigid.velocity.x) < 0.3)
+            if (Mathf.Abs(rigid.velocity.x) < 0.1)
+            {
+                anim.SetBool("isWalk", false);
+            }
+            else if(rigid.position.y > -6.0f && CanGoUp)
             {
                 anim.SetBool("isWalk", false);
             }

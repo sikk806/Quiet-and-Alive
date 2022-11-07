@@ -22,25 +22,28 @@ public class Monster : MonoBehaviour
     public float speed;
     public float distanceBetween;
 
-    //private HP HP;
+    private HP HP;
 
+    SpriteRenderer spriteRenderer;
     Character GameCharacter;
     Animator anim;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
-        //HP = GameObject.Find("HP").GetComponent<HP>();
+        HP = GameObject.Find("HP").GetComponent<HP>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if(Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking && !doOnce)
         {
             GameCharacter.talking = true;
@@ -61,20 +64,27 @@ public class Monster : MonoBehaviour
             NextLine();
         }
 
-        if(playerIsClose)
+        if(playerIsClose && talked)
         {
             anim.SetBool("Close", true);
         }
 
         if(chasing)
         {
+            if (transform.position.x < GameCharacter.transform.position.x)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
             distance = Vector2.Distance(transform.position, GameCharacter.transform.position);
             Vector2 direction = GameCharacter.transform.position - transform.position;
             direction.Normalize();
 
             Vector2 fixedY = new Vector2(GameCharacter.transform.position.x, this.transform.position.y);
 
-            //transform.position = Vector2.MoveTowards(this.transform.position, GameCharacter.transform.position, speed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(this.transform.position, fixedY, speed * Time.deltaTime);
 
             if (playerIsClose || check)
@@ -87,7 +97,7 @@ public class Monster : MonoBehaviour
                 check = true;
                 if (Time.time - checkTime >= 1)
                 {
-                    //HP.nowHp -= 50;
+                    HP.nowHp -= 10;
                     timeCheck = false;
                 }
             }
@@ -147,8 +157,13 @@ public class Monster : MonoBehaviour
             zeroText();
             if (talked)
             {
-                chasing = true;
+                Invoke("waitChangeStance", 4.3f);
             }
         }
+    }
+
+    void waitChangeStance()
+    {
+        chasing = true;
     }
 }
