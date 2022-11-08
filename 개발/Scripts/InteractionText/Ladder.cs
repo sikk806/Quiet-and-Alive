@@ -69,7 +69,7 @@ public class Ladder : MonoBehaviour
                 GameCharacter.anim.SetBool("GoIdle", true);
                 if(isFalling)
                 {
-                    HP.nowHp -= 100;
+                    HP.nowHp -= 50;
                 }
                 isFalling = false;
             }

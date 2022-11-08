@@ -157,7 +157,7 @@ public class Monster : MonoBehaviour
             zeroText();
             if (talked)
             {
-                Invoke("waitChangeStance", 4.3f);
+                Invoke("waitChangeStance", 4.0f);
             }
         }
     }

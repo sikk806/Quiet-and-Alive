@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
-
-
-
     float h;
     float keep_h;
     float v;
+    bool doOnce = false;
     public float maxSpeed;
     public float jumpPower;
 
     public GameObject DestroyMonster;
+    public GameObject Portal;
     public bool talking = false; // 대화중에는 방향키 금지
     public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
     public bool portalOnce = false;
+    public bool portalTwice = false;
     public bool CanGoUp = false;
+    public bool hiding = false;
     private string SceneName = "";
     private bool jumping = false; // 한쪽 방향으로만 점프 유지
     private bool overJump = false; // 쯔꾸르 떨어지면서 점프 시작 방지
@@ -51,27 +52,48 @@ public class Character : MonoBehaviour
     {
         // Scene 이름 가져오기
         SceneName = SceneManager.GetActiveScene().name;
+        
         // horizontal 입력 받아서 움직이는 코드
         keep_h = h;
-        h = Input.GetAxisRaw("Horizontal");
+        // h = Input.GetAxisRaw("Horizontal");
         if(jumping  == true)
         {
             h = keep_h;
         }
-        if(talking)
+        if (talking || hiding || anim.GetBool("isLib"))
         {
             h = 0;
         }
+        else
+        {
+            h = Input.GetAxisRaw("Horizontal");
+        }
+
+        // 1층에서 2층으로 올라갈때
         if (SceneName == "Library1_2F" && portalOnce)
         {
             portalOnce = false;
-
-            //DestroyMonster = GameObject.Find("MonsterIdle");
-            //DestroyMonster.SetActive(false);
+            if(portalTwice)
+            {
+                DestroyMonster = GameObject.Find("MonsterIdle");
+                DestroyMonster.SetActive(false);
+                portalTwice = false;
+            }
             anim.SetBool("GoIdle", false);
             anim.SetBool("isClibing", false);
             anim.SetBool("StopClibing", false);
             rigid.velocity = new Vector2(0, 0);
+        }
+        
+        // 2층에서 1층으로 내려갈때
+        if(SceneName == "Library1" && portalOnce)
+        {
+            Portal = GameObject.Find("Portal_to2F");
+            Portal.SetActive(false);
+            portalOnce = false;
+            portalTwice = true;
+            anim.SetBool("isClibing", true);
+            anim.SetBool("StopClibing", true);
         }
         /*if(SceneName == "Library1" && portalOnce)
         {
@@ -143,6 +165,11 @@ public class Character : MonoBehaviour
         }
         else
         {
+            if(SceneName == "Library1" && !doOnce)
+            {
+                doOnce = true;
+                StartCoroutine(waitforsec());
+            }
             if (Input.GetButtonDown("Jump") && pressJump == false && !talking)
             {
                 AudioSource.Play();
@@ -164,7 +191,7 @@ public class Character : MonoBehaviour
             }
 
             // 방향 바꾸는 코드
-            if (Input.GetButton("Horizontal"))
+            if (Input.GetButton("Horizontal") && !talking && !hiding && !anim.GetBool("isLib"))
             {
                 spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
             }
@@ -250,5 +277,12 @@ public class Character : MonoBehaviour
                 rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
             }
         }
+    }
+
+    public IEnumerator waitforsec()
+    {
+        anim.SetBool("isLib", true);
+        yield return new WaitForSeconds(1.8f);
+        anim.SetBool("isLib", false);
     }
 }

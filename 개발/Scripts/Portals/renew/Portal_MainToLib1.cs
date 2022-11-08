@@ -46,7 +46,6 @@ public class Portal_MainToLib1 : MonoBehaviour
 
     void LoadScene()
     {
-        player.portalOnce = true;
 
         SceneManager.LoadScene("Library1");
     }

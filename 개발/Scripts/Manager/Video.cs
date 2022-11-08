@@ -7,6 +7,7 @@ using UnityEngine.Video;
 public class Video : MonoBehaviour
 {
     private HP HP;
+    private GameOver GameOver;
 
     float currentTime = 0;
     float checkTime = 0;
@@ -14,9 +15,9 @@ public class Video : MonoBehaviour
     private bool doOnce = false;
     private bool timeCheck = false;
     public GameObject VideoPanel;
-    public Image GameOverPanel;
     public RawImage mScreen = null;
     public VideoPlayer mVideoPlayer = null;
+    Color alpha;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class Video : MonoBehaviour
         }
 
         HP = GameObject.Find("HP").GetComponent<HP>();
+        GameOver = GameObject.Find("GameOver").GetComponent<GameOver>();
     }
 
     protected IEnumerator PrepareVideo()
@@ -71,34 +73,7 @@ public class Video : MonoBehaviour
 
     void FadeOut()
     {
-        Debug.Log("In");
-        Color alpha = GameOverPanel.color;
-        Debug.Log(Time.time - checkTime);
-        /*while (alpha.a < 255)
-        {
-            *//*endTime = Time.time;
-            if(endTime - startTime > 0.5f)
-            {
-                Debug.Log("check");
-                alpha.a = 255;
-                startTime = Time.time;
-                //Debug.Log(Time.time);
-            }*//*
-
-            if (!timeCheck)
-            {
-                checkTime = Time.time;
-                timeCheck = true;
-            }
-            if (Time.time - checkTime >= 1)
-            {
-                alpha.a += 100;
-                timeCheck = false;
-            }
-
-            GameOverPanel.color = alpha;
-        }*/
-        
-        Debug.Log("Done");
+        GameOver.Gameover = true;
     }
+
 }

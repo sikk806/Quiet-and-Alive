@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Hiding : MonoBehaviour
 {
+    private GameObject Portal;
     public GameObject GlitterProps;
     public bool CanHide = false;
     public bool Hide = true;
@@ -14,6 +15,7 @@ public class Hiding : MonoBehaviour
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
+        Portal = GameObject.Find("Portal_to2F");
     }
 
     // Update is called once per frame
@@ -23,12 +25,15 @@ public class Hiding : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Z))
             {
+                Portal.SetActive(true);
                 Hide = true;
+                GameCharacter.hiding = true;
                 GameCharacter.anim.SetBool("isHide", true);
             }
             else if(Input.GetKeyUp(KeyCode.Z))
             {
                 Hide = false;
+                GameCharacter.hiding = false;
                 GameCharacter.anim.SetBool("isHide", false);
             }
         }
