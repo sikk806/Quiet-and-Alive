@@ -15,6 +15,7 @@ public class Character : MonoBehaviour
 
     public GameObject DestroyMonster;
     public GameObject Portal;
+    public GameObject Monster;
     public bool talking = false; // 대화중에는 방향키 금지
     public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
     public bool portalOnce = false;
