@@ -8,11 +8,15 @@ public class MovingPlatform : MonoBehaviour
     Vector2 movingSpot;
     Vector2 spot1;
 
+    Drown Drown;
+
     bool go = true;
+    int step = 0;
     // Start is called before the first frame update
     void Start()
     {
         startSpot = transform.position;
+        Drown = GameObject.Find("Body_Blood").GetComponent<Drown>();
     }
 
     // Update is called once per frame
@@ -22,7 +26,10 @@ public class MovingPlatform : MonoBehaviour
         spot1 = new Vector2(370.0f, -144.0f);
         if (go)
         {
-            transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+            if (step == 0)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+            }
             if (movingSpot == spot1)
             {
                 go = false;
@@ -35,6 +42,22 @@ public class MovingPlatform : MonoBehaviour
             {
                 go = true;
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            Drown.onBone = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Drown.onBone = false;
         }
     }
 }

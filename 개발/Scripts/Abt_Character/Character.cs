@@ -10,18 +10,20 @@ public class Character : MonoBehaviour
     float keep_h;
     float v;
     bool doOnce = false;
-    public float maxSpeed;
-    public float jumpPower;
 
     public GameObject DestroyMonster;
     public GameObject Portal;
     public GameObject Monster;
+
     public bool talking = false; // 대화중에는 방향키 금지
     public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
     public bool portalOnce = false;
     public bool portalTwice = false;
     public bool CanGoUp = false;
     public bool hiding = false;
+    public float maxSpeed;
+    public float jumpPower;
+
     private string SceneName = "";
     private bool jumping = false; // 한쪽 방향으로만 점프 유지
     private bool overJump = false; // 쯔꾸르 떨어지면서 점프 시작 방지
@@ -102,6 +104,7 @@ public class Character : MonoBehaviour
         }*/
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
+            anim.SetBool("IB", true);
             // 도서관 에서의 Jump 삭제
             /*anim.SetBool("isJump", false);*/
             pressJump = false;
@@ -157,16 +160,14 @@ public class Character : MonoBehaviour
             // **********************************************
             else if (rigid.velocity.y <= -18.5f && jumping)
             {
-
-                Debug.Log("check : " + rigid.velocity.y);
-                Debug.Log("check-not jump");
                 anim.SetBool("isJump", false);
                 //jumping = false;
             }
         }
         else
         {
-            if(SceneName == "Library1" && !doOnce)
+            anim.SetBool("IB", false);
+            if (SceneName == "Library1" && !doOnce)
             {
                 doOnce = true;
                 StartCoroutine(waitforsec());
