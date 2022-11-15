@@ -23,7 +23,14 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(SceneManager.GetActiveScene().name == "LoadingScene")
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        if (HP.nowHp <= 0)
+        {
+            Gameover = true;
+        }
         if (Gameover)
         {
             alpha = GameoverPanel.color;
@@ -51,6 +58,11 @@ public class GameOver : MonoBehaviour
                     Gameover = false;
                 }
             }
+        }
+        else
+        {
+            alpha.a = 0.0f;
+            alpha_t.a = 0.0f;
         }
         if(alpha.a >= 1.0f)
         {
