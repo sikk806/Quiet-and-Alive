@@ -36,7 +36,6 @@ public class SinkBones : MonoBehaviour
             }
             else if(BoneColor.a <= 0 && sinking)
             {
-                Debug.Log("check");
                 StartCoroutine(sink());
             }
             else if (BoneColor.a < 1 && !sinking)
@@ -55,9 +54,7 @@ public class SinkBones : MonoBehaviour
     public IEnumerator sink()
     {
         Bone.SetActive(false);
-        Debug.Log("check");
         yield return new WaitForSeconds(1.0f);
-        Debug.Log("check");
         sinking = false;
         Bone.SetActive(true);
     }

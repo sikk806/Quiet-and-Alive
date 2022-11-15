@@ -23,9 +23,8 @@ public class Drown : MonoBehaviour
     void Update()
     {
         // 뼈 위에 있으면 안전
-        if(!onBone)
+        if(!onBone && Character.anim.GetBool("JumpMap") && !Character.anim.GetBool("isJump"))
         {
-
             Character.anim.SetBool("UpOo", true);
             if(Time.time - checkTime >= 1.0f)
             {
@@ -33,10 +32,9 @@ public class Drown : MonoBehaviour
                 checkTime = Time.time;
             }
         }
-        else
+        else if(onBone || !Character.anim.GetBool("JumpMap") || Character.anim.GetBool("isJump"))
         {
             Character.anim.SetBool("UpOo", false);
-
         }
     }
 }

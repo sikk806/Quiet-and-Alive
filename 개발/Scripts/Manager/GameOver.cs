@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class GameOver : MonoBehaviour
     public Image GameoverPanel;
     public Text GameoverText;
     public bool Gameover = false;
+    Color alpha;
+    Color alpha_t;
+    HP HP;
     // Start is called before the first frame update
     void Start()
     {
-        
+        HP = GameObject.Find("HP").GetComponent<HP>();
     }
 
     // Update is called once per frame
@@ -22,8 +26,8 @@ public class GameOver : MonoBehaviour
         
         if (Gameover)
         {
-            Color alpha = GameoverPanel.color;
-            Color alpha_t = GameoverText.color;
+            alpha = GameoverPanel.color;
+            alpha_t = GameoverText.color;
 
             if(!timeCheck)
             {
@@ -47,6 +51,14 @@ public class GameOver : MonoBehaviour
                     Gameover = false;
                 }
             }
+        }
+        if(alpha.a >= 1.0f)
+        {
+            alpha.a = 0.0f;
+            alpha_t.a = 0.0f;
+            HP.nowHp = 100;
+            Gameover = false;
+            SceneManager.LoadScene("Main");
         }
     }
 }

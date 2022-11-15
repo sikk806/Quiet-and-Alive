@@ -39,7 +39,6 @@ public class Character : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -48,11 +47,15 @@ public class Character : MonoBehaviour
 
     void Start()
     {
-        //Ladder = GameObject.Find("Ladder").GetComponent<Ladder>();
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
+        if (SceneName == "Main")
+        {
+            Destroy(gameObject);
+        }
         // Scene 이름 가져오기
         SceneName = SceneManager.GetActiveScene().name;
         

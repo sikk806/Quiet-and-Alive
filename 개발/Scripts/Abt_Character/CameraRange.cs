@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraRange : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class CameraRange : MonoBehaviour
     public GameObject BackGround;
     public float MinX, MinY, MaxX, MaxY, bgSizeX, bgSizeY;
     float CameraWidth, CameraHeight;
+    private string SceneName = "";
 
     void Start()
     {
@@ -39,6 +41,10 @@ public class CameraRange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SceneName == "Main")
+        {
+            Destroy(gameObject);
+        }
         BackGround = GameObject.FindGameObjectWithTag("BackGround");
         bgSizeX = BackGround.GetComponent<Renderer>().bounds.size.x;
         bgSizeY = BackGround.GetComponent<Renderer>().bounds.size.y;

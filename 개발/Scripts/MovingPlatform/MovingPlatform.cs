@@ -6,7 +6,9 @@ public class MovingPlatform : MonoBehaviour
 {
     Vector2 startSpot;
     Vector2 movingSpot;
-    Vector2 spot1;
+    Vector2 spot1 = new Vector2(370.0f, -144.0f);
+    Vector2 spot2 = new Vector2(366.0f, -151.0f);
+    Vector2 spot3 = new Vector2(361.0f, -160.0f);
 
     Drown Drown;
 
@@ -23,24 +25,60 @@ public class MovingPlatform : MonoBehaviour
     void Update()
     {
         movingSpot = transform.position;
-        spot1 = new Vector2(370.0f, -144.0f);
         if (go)
         {
             if (step == 0)
             {
                 transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+                if(movingSpot == spot1)
+                {
+                    step = 1;
+                }
             }
-            if (movingSpot == spot1)
+            else if(step == 1)
             {
-                go = false;
+                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.02f);
+                if (movingSpot == spot2)
+                {
+                    step = 2;
+                }
+            }
+            else if(step == 2)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, spot3, 0.02f);
+                if (movingSpot == spot3)
+                {
+                    step = 0;
+                    go = false;
+                }
             }
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, startSpot, 0.02f);
-            if (movingSpot == startSpot)
+            if (step == 0)
             {
-                go = true;
+                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.02f);
+                if (movingSpot == spot2)
+                {
+                    step = 1;
+                }
+            }
+            else if (step == 1)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+                if (movingSpot == spot1)
+                {
+                    step = 2;
+                }
+            }
+            else if (step == 2)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, startSpot, 0.02f);
+                if (movingSpot == startSpot)
+                {
+                    step = 0;
+                    go = true;
+                }
             }
         }
     }
@@ -50,6 +88,7 @@ public class MovingPlatform : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             Drown.onBone = true;
+            other.transform.SetParent(transform);
         }
     }
 
@@ -58,6 +97,7 @@ public class MovingPlatform : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Drown.onBone = false;
+            other.transform.SetParent(null);
         }
     }
 }
