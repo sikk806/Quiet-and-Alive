@@ -9,7 +9,11 @@ public class checkDoor : MonoBehaviour
     public GameObject ForDestroy;
     public Text dialogueText;
     public string[] dialogue;
+    public Rigidbody2D rigid;
+
     private int index;
+    private bool waitSecond = false;
+    private bool goDown = false;
 
     public float wordSpeed;
     public bool playerIsClose;
@@ -20,13 +24,14 @@ public class checkDoor : MonoBehaviour
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
+        rigid = GameObject.Find("Character").GetComponent<Rigidbody2D>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking)
+        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking && !waitSecond)
         {
             NextLine();
         }
@@ -41,6 +46,7 @@ public class checkDoor : MonoBehaviour
 
     IEnumerator Typing()
     {
+        GameCharacter.anim.SetBool("isSurprise", false);
         foreach (char letter in dialogue[index].ToCharArray())
         {
             dialogueText.text += letter;
@@ -48,17 +54,27 @@ public class checkDoor : MonoBehaviour
         }
     }
 
+
     public void NextLine()
     {
         if (index < dialogue.Length - 1)
         {
             index++;
             dialogueText.text = "";
-            StartCoroutine(Typing());
+            if (index == 2)
+            {
+                StartCoroutine(Typing());
+            }
+            else
+            {
+
+                StartCoroutine(Typing());
+            }
         }
         else
         {
             GameCharacter.talking = false;
+            GameCharacter.anim.SetBool("isSurprise", false);
             zeroText();
         }
     }

@@ -7,6 +7,7 @@ public class Portal_DarkRoom : MonoBehaviour
     bool playerIsClose = false;
     public int PortalNo = 0;
     public Character Character;
+    public GameObject Heart;
 
     // DarkRoom, BoneStart, MazeStart, HeartStart
     float[] x = { 355.0f, 358.0f, 347.0f, 251.5f };
@@ -56,6 +57,7 @@ public class Portal_DarkRoom : MonoBehaviour
         else if (CompareTag("ViseraToHeart"))
         {
             PortalNo = 3;
+            Heart.SetActive(false);
         }
         Character.transform.position = new Vector2(x[PortalNo], y[PortalNo]);
     }

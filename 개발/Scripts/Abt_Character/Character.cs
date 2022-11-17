@@ -177,12 +177,11 @@ public class Character : MonoBehaviour
             }
             if (Input.GetButtonDown("Jump") && pressJump == false && !talking)
             {
-                AudioSource.Play();
                 rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             }
             else if(talking)
             {
-                
+                rigidbody.constrains = RigidbodyComstrains.FreezeAll;
             }
 
             // ÁÂ¿ì ¹öÆ°

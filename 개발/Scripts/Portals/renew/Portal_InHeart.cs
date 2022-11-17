@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoToMaze : MonoBehaviour
+public class Portal_InHeart : MonoBehaviour
 {
-    public bool playerIsClose;
-    public Character player;
+    bool playerIsClose = false;
 
+    public Character Character;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Character>();
+        Character = GameObject.Find("Character").GetComponent<Character>();
     }
 
     // Update is called once per frame
@@ -18,10 +18,9 @@ public class GoToMaze : MonoBehaviour
     {
         if(playerIsClose)
         {
-            player.transform.position = new Vector2(297.0f, -230.0f);
+            Character.transform.position = new Vector2(267.7f, -164.1f);
             playerIsClose = false;
         }
-        
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -31,6 +30,4 @@ public class GoToMaze : MonoBehaviour
             playerIsClose = true;
         }
     }
-
-    
 }

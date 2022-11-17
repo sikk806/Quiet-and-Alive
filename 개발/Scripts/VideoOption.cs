@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 public class VideoOption : MonoBehaviour
 {
     private string SceneName = "";
+    public GameObject[] Canvas;
+
     List<Resolution> resolutions = new List<Resolution>();
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        
+        Canvas = GameObject.FindGameObjectsWithTag("UIs");
         Screen.SetResolution(854, 480, false);
     }
 
@@ -23,6 +24,11 @@ public class VideoOption : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            DeleteCanvas();
+        }
     }
 
     void InitUI()
@@ -31,6 +37,14 @@ public class VideoOption : MonoBehaviour
         foreach(Resolution item in resolutions)
         {
             Debug.Log(item.width + "x" + item.height + " " + item.refreshRate);
+        }
+    }
+
+    private void DeleteCanvas()
+    {
+        if(Canvas.Length >1)
+        {
+            Destroy(Canvas[1]);
         }
     }
 }

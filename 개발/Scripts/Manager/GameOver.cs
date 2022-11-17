@@ -17,24 +17,28 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         HP = GameObject.Find("HP").GetComponent<HP>();
+        alpha = GameoverPanel.color;
+        alpha_t = GameoverText.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "LoadingScene")
-        {
-            DontDestroyOnLoad(gameObject);
-        }
         if (HP.nowHp <= 0)
         {
             Gameover = true;
         }
+        else if (HP.nowHp > 0)
+        {
+            alpha.a = 0.0f;
+            alpha_t.a = 0.0f;
+            GameoverPanel.color = alpha;
+            GameoverText.color = alpha_t;
+        }
         if (Gameover)
         {
-            alpha = GameoverPanel.color;
-            alpha_t = GameoverText.color;
 
             if(!timeCheck)
             {
@@ -59,15 +63,12 @@ public class GameOver : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            alpha.a = 0.0f;
-            alpha_t.a = 0.0f;
-        }
         if(alpha.a >= 1.0f)
         {
             alpha.a = 0.0f;
             alpha_t.a = 0.0f;
+            GameoverPanel.color = alpha;
+            GameoverText.color = alpha_t;
             HP.nowHp = 100;
             Gameover = false;
             SceneManager.LoadScene("Main");
