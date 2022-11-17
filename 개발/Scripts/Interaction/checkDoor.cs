@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class checkDoor : MonoBehaviour
 {
+    public GameObject DestroyObject;
     public GameObject dialoguePanel;
     public GameObject ForDestroy;
     public Text dialogueText;
@@ -13,7 +14,6 @@ public class checkDoor : MonoBehaviour
 
     private int index;
     private bool waitSecond = false;
-    private bool goDown = false;
 
     public float wordSpeed;
     public bool playerIsClose;
@@ -42,6 +42,7 @@ public class checkDoor : MonoBehaviour
         dialogueText.text = "";
         index = 0;
         dialoguePanel.SetActive(false);
+        Destroy(ForDestroy);
     }
 
     IEnumerator Typing()
@@ -49,8 +50,11 @@ public class checkDoor : MonoBehaviour
         GameCharacter.anim.SetBool("isSurprise", false);
         foreach (char letter in dialogue[index].ToCharArray())
         {
+            waitSecond = true;
             dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
+            yield return new WaitForSeconds(wordSpeed / dialogue[index].Length);
+            waitSecond = false;
+            
         }
     }
 
@@ -83,7 +87,6 @@ public class checkDoor : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("check");
             GameCharacter.talking = true;
             dialoguePanel.SetActive(true);
             StartCoroutine(Typing());
@@ -94,13 +97,10 @@ public class checkDoor : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("Exit");
             GameCharacter.talking = false;
 
 
             ForDestroy = GameObject.Find("checkDoor");
-
-            Destroy(ForDestroy);
         }
     }
 }

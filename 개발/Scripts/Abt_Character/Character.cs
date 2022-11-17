@@ -11,12 +11,13 @@ public class Character : MonoBehaviour
     float v;
     bool doOnce = false;
 
-    public GameObject DestroyMonster;
+    public GameObject DestroyObject;
+    public GameObject ActiveObject;
     public GameObject Portal;
     public GameObject Monster;
 
-    public bool talking = false; // ´ëÈ­Áß¿¡´Â ¹æÇâÅ° ±İÁö
-    public bool pressJump = false; // ´õºí Á¡ÇÁ ¹æÁö , »ç´Ù¸®¿¡¼­ Á¡ÇÁ ¹æÁö
+    public bool talking = false; // ëŒ€í™”ì¤‘ì—ëŠ” ë°©í–¥í‚¤ ê¸ˆì§€
+    public bool pressJump = false; // ë”ë¸” ì í”„ ë°©ì§€ , ì‚¬ë‹¤ë¦¬ì—ì„œ ì í”„ ë°©ì§€
     public bool portalOnce = false;
     public bool portalTwice = false;
     public bool CanGoUp = false;
@@ -25,9 +26,9 @@ public class Character : MonoBehaviour
     public float jumpPower;
 
     private string SceneName = "";
-    private bool jumping = false; // ÇÑÂÊ ¹æÇâÀ¸·Î¸¸ Á¡ÇÁ À¯Áö
-    private bool overJump = false; // Âê²Ù¸£ ¶³¾îÁö¸é¼­ Á¡ÇÁ ½ÃÀÛ ¹æÁö
-    private float jumpTime = 0; // Jump ½Ã°£ ÃøÁ¤
+    private bool jumping = false; // í•œìª½ ë°©í–¥ìœ¼ë¡œë§Œ ì í”„ ìœ ì§€
+    private bool overJump = false; // ì¯”ê¾¸ë¥´ ë–¨ì–´ì§€ë©´ì„œ ì í”„ ì‹œì‘ ë°©ì§€
+    private float jumpTime = 0; // Jump ì‹œê°„ ì¸¡ì •
     private float origin_Y;
     //private Ladder Ladder;
 
@@ -52,14 +53,18 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        if(!talking)
+        {
+            rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
         if (SceneName == "Main")
         {
             Destroy(gameObject);
         }
-        // Scene ÀÌ¸§ °¡Á®¿À±â
+        // Scene ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
         SceneName = SceneManager.GetActiveScene().name;
         
-        // horizontal ÀÔ·Â ¹Ş¾Æ¼­ ¿òÁ÷ÀÌ´Â ÄÚµå
+        // horizontal ì…ë ¥ ë°›ì•„ì„œ ì›€ì§ì´ëŠ” ì½”ë“œ
         keep_h = h;
         // h = Input.GetAxisRaw("Horizontal");
         if(jumping  == true)
@@ -75,14 +80,16 @@ public class Character : MonoBehaviour
             h = Input.GetAxisRaw("Horizontal");
         }
 
-        // 1Ãş¿¡¼­ 2ÃşÀ¸·Î ¿Ã¶ó°¥¶§
+        // 1ì¸µì—ì„œ 2ì¸µìœ¼ë¡œ ì˜¬ë¼ê°ˆë•Œ
         if (SceneName == "Library1_2F" && portalOnce)
         {
             portalOnce = false;
             if(portalTwice)
             {
-                DestroyMonster = GameObject.Find("MonsterIdle");
-                DestroyMonster.SetActive(false);
+                DestroyObject = GameObject.Find("MonsterIdle");
+                DestroyObject.SetActive(false);
+                DestroyObject = GameObject.Find("BandageBookPortal/BandageBook");
+                DestroyObject.SetActive(true);
                 portalTwice = false;
             }
             anim.SetBool("GoIdle", false);
@@ -91,7 +98,7 @@ public class Character : MonoBehaviour
             rigid.velocity = new Vector2(0, 0);
         }
         
-        // 2Ãş¿¡¼­ 1ÃşÀ¸·Î ³»·Á°¥¶§
+        // 2ì¸µì—ì„œ 1ì¸µìœ¼ë¡œ ë‚´ë ¤ê°ˆë•Œ
         if(SceneName == "Library1" && portalOnce)
         {
             Portal = GameObject.Find("Portal_to2F");
@@ -108,11 +115,11 @@ public class Character : MonoBehaviour
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             anim.SetBool("IB", true);
-            // µµ¼­°ü ¿¡¼­ÀÇ Jump »èÁ¦
+            // ë„ì„œê´€ ì—ì„œì˜ Jump ì‚­ì œ
             /*anim.SetBool("isJump", false);*/
             pressJump = false;
 
-            //À§, ¾Æ·¡
+            //ìœ„, ì•„ë˜
             v = Input.GetAxisRaw("Vertical");
             if(talking)
             {
@@ -124,7 +131,7 @@ public class Character : MonoBehaviour
                 spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
             }
 
-            // ÁÂ / ¿ì
+            // ì¢Œ / ìš°
             //Debug.Log("vel.x : " + rigid.velocity.x);
             if (Mathf.Abs(rigid.velocity.x) < 0.3 && !jumping)
             {
@@ -135,7 +142,7 @@ public class Character : MonoBehaviour
                 anim.SetBool("isWalk", true);
             }
 
-            // À§ / ¾Æ·¡
+            // ìœ„ / ì•„ë˜
             if ((rigid.velocity.y) > 0 && !jumping)
             {
                 anim.SetBool("isWalk", false);
@@ -159,7 +166,7 @@ public class Character : MonoBehaviour
             }
 
             // **********************************************
-            // JUMP ³ôÀÌ ¹Ù²Ù°í ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÀÌ»óÇÒ¶§ ¹Ù²ãº¼°Í
+            // JUMP ë†’ì´ ë°”ê¾¸ê³  ì• ë‹ˆë©”ì´ì…˜ì´ ì´ìƒí• ë•Œ ë°”ê¿”ë³¼ê²ƒ
             // **********************************************
             else if (rigid.velocity.y <= -18.5f && jumping)
             {
@@ -181,10 +188,10 @@ public class Character : MonoBehaviour
             }
             else if(talking)
             {
-                rigidbody.constrains = RigidbodyComstrains.FreezeAll;
+                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             }
 
-            // ÁÂ¿ì ¹öÆ°
+            // ì¢Œìš° ë²„íŠ¼
             if (Input.GetButtonDown("Horizontal"))
             {
                 rigid.velocity = new Vector2(rigid.velocity.normalized.x * 10.0f, rigid.velocity.y);
@@ -194,7 +201,7 @@ public class Character : MonoBehaviour
                 rigid.velocity = new Vector2(rigid.velocity.normalized.x, rigid.velocity.y);
             }
 
-            // ¹æÇâ ¹Ù²Ù´Â ÄÚµå
+            // ë°©í–¥ ë°”ê¾¸ëŠ” ì½”ë“œ
             if (Input.GetButton("Horizontal") && !talking && !hiding && !anim.GetBool("isLib"))
             {
                 spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
