@@ -6,29 +6,37 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    float checkTime = 0;
     bool timeCheck = false;
-    public Image GameoverPanel;
+    bool doOnce = false;
+    float checkTime = 0;
+
     public Text GameoverText;
+    public Image GameoverPanel;
+
     public bool Gameover = false;
-    Color alpha;
-    Color alpha_t;
+
+    VideoPlay VideoPlay;
     HP HP;
+    Color alpha_t;
+    Color alpha;
+
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         HP = GameObject.Find("HP").GetComponent<HP>();
-        alpha = GameoverPanel.color;
+        VideoPlay = GameObject.Find("VideoController").GetComponent<VideoPlay>();
+        DontDestroyOnLoad(gameObject);
         alpha_t = GameoverText.color;
+        alpha = GameoverPanel.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (HP.nowHp <= 0)
+        if (HP.nowHp <= 0 && !doOnce)
         {
-            Gameover = true;
+            doOnce = true;
+            StartCoroutine(waitforsec());
         }
         else if (HP.nowHp > 0)
         {
@@ -45,14 +53,12 @@ public class GameOver : MonoBehaviour
                 timeCheck = true;
                 checkTime = Time.time;
             }
-            if(Time.time - checkTime >= 0.01f)
+            if(Time.time - checkTime >= 0.1f)
             {
-                Debug.Log(checkTime);
                 if(alpha.a < 1)
                 {
-                    alpha.a += 0.005f;
-                    alpha_t.a += 0.005f;
-                    Debug.Log(alpha.a);
+                    alpha.a += 0.05f;
+                    alpha_t.a += 0.05f;
                     GameoverPanel.color = alpha;
                     GameoverText.color = alpha_t;
                     timeCheck = false;
@@ -71,7 +77,14 @@ public class GameOver : MonoBehaviour
             GameoverText.color = alpha_t;
             HP.nowHp = 100;
             Gameover = false;
+            doOnce = false;
             SceneManager.LoadScene("Main");
         }
+    }
+
+    public IEnumerator waitforsec()
+    {
+        yield return new WaitForSeconds(0.5f);
+        VideoPlay.waitTime = true;
     }
 }

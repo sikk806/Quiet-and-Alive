@@ -8,7 +8,9 @@ public class ForNoSound : MonoBehaviour
     public GameObject dialoguePanel;
     public Text dialogueText;
     public string[] dialogue;
+
     private int index;
+    private bool waitSecond = false;
 
     public float wordSpeed;
     public bool playerIsClose;
@@ -38,7 +40,7 @@ public class ForNoSound : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking)
+        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking && !waitSecond)
         {
             NextLine();
         }
@@ -55,8 +57,10 @@ public class ForNoSound : MonoBehaviour
     {
         foreach (char letter in dialogue[index].ToCharArray())
         {
+            waitSecond = true;
             dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
+            yield return new WaitForSeconds(wordSpeed / dialogue[index].Length);
+            waitSecond = false;
         }
     }
 

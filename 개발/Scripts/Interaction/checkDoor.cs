@@ -98,8 +98,6 @@ public class checkDoor : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             GameCharacter.talking = false;
-
-
             ForDestroy = GameObject.Find("checkDoor");
         }
     }

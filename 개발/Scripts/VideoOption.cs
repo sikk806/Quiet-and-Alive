@@ -20,7 +20,7 @@ public class VideoOption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneName == "Main" || SceneName == "LoadingScene")
+        if (SceneName == "Main")
         {
             Destroy(gameObject);
         }

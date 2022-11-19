@@ -62,7 +62,7 @@ public class Ladder : MonoBehaviour
                 GameCharacter.anim.SetBool("StopClibing", false);
             }
 
-            if(GameCharacter.rigid.position.y < -6.2f)
+            if(GameCharacter.rigid.position.y < -6.1f)
             {
                 GameCharacter.pressJump = false;
                 GameCharacter.anim.SetBool("isClibing", false);

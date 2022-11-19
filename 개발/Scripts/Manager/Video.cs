@@ -9,11 +9,9 @@ public class Video : MonoBehaviour
     private HP HP;
     private GameOver GameOver;
 
-    float currentTime = 0;
     float checkTime = 0;
 
     private bool doOnce = false;
-    private bool timeCheck = false;
     public GameObject VideoPanel;
     public RawImage mScreen = null;
     public VideoPlayer mVideoPlayer = null;

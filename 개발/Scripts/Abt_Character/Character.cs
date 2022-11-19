@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     public bool portalOnce = false;
     public bool portalTwice = false;
     public bool CanGoUp = false;
+    public bool stop = true;
     public bool hiding = false;
     public float maxSpeed;
     public float jumpPower;
@@ -34,8 +35,12 @@ public class Character : MonoBehaviour
 
     public Animator anim;
     public Rigidbody2D rigid;
+
+    Vector3 InBodyFalling = new Vector3(295.67f, -84.41f, 1.0f);
+    
     SpriteRenderer spriteRenderer;
     AudioSource AudioSource;
+    VideoPlay VideoPlay;
 
 
     void Awake()
@@ -44,6 +49,7 @@ public class Character : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
+        VideoPlay = GameObject.Find("VideoController").GetComponent<VideoPlay>();
     }
 
     void Start()
@@ -83,13 +89,14 @@ public class Character : MonoBehaviour
         // 1층에서 2층으로 올라갈때
         if (SceneName == "Library1_2F" && portalOnce)
         {
+            DestroyObject = GameObject.Find("BandageBook");
             portalOnce = false;
             if(portalTwice)
             {
-                DestroyObject = GameObject.Find("MonsterIdle");
+                ActiveObject = GameObject.Find("MonsterIdle");
+                ActiveObject.SetActive(false);
+                DestroyObject = GameObject.Find("CheckDoor");
                 DestroyObject.SetActive(false);
-                DestroyObject = GameObject.Find("BandageBookPortal/BandageBook");
-                DestroyObject.SetActive(true);
                 portalTwice = false;
             }
             anim.SetBool("GoIdle", false);
@@ -108,10 +115,24 @@ public class Character : MonoBehaviour
             anim.SetBool("isClibing", true);
             anim.SetBool("StopClibing", true);
         }
-        /*if(SceneName == "Library1" && portalOnce)
+        // 책속세상(IB) 영상재생
+        if(SceneName == "In_Body" && portalOnce)
         {
-            portalOnce = true;
-        }*/
+            portalOnce = false;
+            VideoPlay.waitTime = true;
+            StartCoroutine(InBodyWait());
+        }
+        //책속세상(IB) 떨어지는 모션
+        if(anim.GetBool("isFalling"))
+        {
+            Debug.Log(Time.time);
+            transform.position = Vector3.MoveTowards(transform.position, InBodyFalling, 0.02f);
+            if(transform.position == InBodyFalling)
+            {
+                anim.SetBool("isFalling", false);
+                stop = false;
+            }
+        }
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
             anim.SetBool("IB", true);
@@ -186,9 +207,16 @@ public class Character : MonoBehaviour
             {
                 rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             }
-            else if(talking)
+            else if(talking || stop)
             {
-                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                if (SceneName == "In_Body")
+                {
+                    rigid.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+                }
+                else
+                {
+                    rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                }
             }
 
             // 좌우 버튼
@@ -292,8 +320,20 @@ public class Character : MonoBehaviour
 
     public IEnumerator waitforsec()
     {
+        rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        yield return new WaitForSeconds(7.95f);
+
         anim.SetBool("isLib", true);
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.0f);
         anim.SetBool("isLib", false);
+        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        stop = false;
+    }
+
+    public IEnumerator InBodyWait()
+    {
+        yield return new WaitForSeconds(7.5f);
+        anim.SetBool("isFalling", true);
+        //stop = false;
     }
 }

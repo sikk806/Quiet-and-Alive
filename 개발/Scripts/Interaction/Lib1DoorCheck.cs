@@ -12,6 +12,7 @@ public class Lib1DoorCheck : MonoBehaviour
 
     public float wordSpeed;
     public bool playerIsClose;
+    private bool waitSecond = false;
 
     Character GameCharacter;
     AudioSource AudioSource;
@@ -41,7 +42,7 @@ public class Lib1DoorCheck : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking)
+        if (Input.GetKeyDown(KeyCode.Z) && dialogueText.text == dialogue[index] && GameCharacter.talking &&! waitSecond)
         {
             NextLine();
         }
@@ -58,8 +59,10 @@ public class Lib1DoorCheck : MonoBehaviour
     {
         foreach (char letter in dialogue[index].ToCharArray())
         {
+            waitSecond = true;
             dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
+            yield return new WaitForSeconds(wordSpeed / dialogue[index].Length);
+            waitSecond = false;
         }
     }
 
