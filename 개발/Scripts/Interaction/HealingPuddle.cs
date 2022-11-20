@@ -8,19 +8,49 @@ public class HealingPuddle : MonoBehaviour
 
     bool healing = false;
     bool checkTime = false;
+    bool alphaTime = false;
+
+    float startAlphaTime;
     float startTime;
+
+    public GameObject healPuddle;
+    Color healAlpha;
+    SpriteRenderer healRenderer;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         HP = GameObject.Find("HP").GetComponent<HP>();
+        healRenderer = healPuddle.GetComponent<SpriteRenderer>();
+        healAlpha = healRenderer.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(healing)
+        if (healing)
         {
+            if (!alphaTime)
+            {
+                startAlphaTime = Time.time;
+                alphaTime = true;
+            }
+            else
+            {
+                if (Time.time - startAlphaTime >= 0.1f)
+                {
+                    healAlpha = new Color(1, 1, 1, healAlpha.a + 0.05f);
+                    healRenderer.color = healAlpha;
+                    alphaTime = true;
+                }
+                if(healAlpha.a >= 0.8f)
+                {
+                    healAlpha.a = 0.8f;
+                }
+            }
+             
             if (!checkTime)
             {
                 startTime = Time.time;
@@ -39,6 +69,27 @@ public class HealingPuddle : MonoBehaviour
                         HP.nowHp = 100;
                     }
                     checkTime = false;
+                }
+            }
+        }
+        else
+        {
+            if(!alphaTime)
+            {
+                startAlphaTime = Time.time;
+                alphaTime = true;
+            }
+            else
+            {
+                if (Time.time - startAlphaTime >= 0.1f)
+                {
+                    healAlpha = new Color(1, 1, 1, healAlpha.a - 0.05f);
+                    healRenderer.color = healAlpha;
+                    alphaTime = true;
+                }
+                if (healAlpha.a <= 0.0f)
+                {
+                    healAlpha.a = 0.0f;
                 }
             }
         }

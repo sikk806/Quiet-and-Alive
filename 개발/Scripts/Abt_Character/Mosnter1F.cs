@@ -14,7 +14,7 @@ public class Mosnter1F : MonoBehaviour
 
     private Animator anim;
 
-    float speed = 0.02f;
+    public float speed;
 
     bool check = false;
     bool fall = true;
@@ -24,7 +24,6 @@ public class Mosnter1F : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 0.02f;
         Left = GameObject.Find("movePoint_L");
         Right = GameObject.Find("movePoint_R");
         anim = GetComponent<Animator>();
@@ -45,7 +44,7 @@ public class Mosnter1F : MonoBehaviour
             {
                 Vector2 right = new Vector2(Right.transform.position.x, Right.transform.position.y);
                 transform.position = Vector2.MoveTowards(transform.position, Right.transform.position, speed);
-                if (transform.position.y <= -4.0f)
+                if (transform.position.y <= -6.5f)
                 {
                     anim.SetBool("startFalling", false);
                 }
@@ -90,7 +89,7 @@ public class Mosnter1F : MonoBehaviour
             }
         }
 
-        if(playerIsClose)
+        if(playerIsClose && !character.anim.GetBool("isHide"))
         {
             HP.nowHp = 0;
         }

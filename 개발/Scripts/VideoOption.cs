@@ -15,6 +15,7 @@ public class VideoOption : MonoBehaviour
     {
         Canvas = GameObject.FindGameObjectsWithTag("UIs");
         Screen.SetResolution(854, 480, false);
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
