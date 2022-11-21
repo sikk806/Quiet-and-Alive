@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
     public bool portalOnce = false;
     public bool portalTwice = false;
     public bool CanGoUp = false;
-    public bool stop = true;
+    public bool stop = false;
     public bool hiding = false;
     public float maxSpeed;
     public float jumpPower;
@@ -59,6 +59,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        
         if(!talking)
         {
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -69,6 +70,10 @@ public class Character : MonoBehaviour
         }
         // Scene 이름 가져오기
         SceneName = SceneManager.GetActiveScene().name;
+       /* if (SceneName == "QsRoom")
+        {
+            stop = false;
+        }*/
         
         // horizontal 입력 받아서 움직이는 코드
         keep_h = h;
@@ -200,6 +205,7 @@ public class Character : MonoBehaviour
             anim.SetBool("IB", false);
             if (SceneName == "Library1" && !doOnce)
             {
+                stop = true;
                 doOnce = true;
                 StartCoroutine(waitforsec());
             }
