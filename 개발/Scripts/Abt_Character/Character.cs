@@ -126,7 +126,7 @@ public class Character : MonoBehaviour
         if(anim.GetBool("isFalling"))
         {
             Debug.Log(Time.time);
-            transform.position = Vector3.MoveTowards(transform.position, InBodyFalling, 0.02f);
+            transform.position = Vector3.MoveTowards(transform.position, InBodyFalling, 0.5f);
             if(transform.position == InBodyFalling)
             {
                 anim.SetBool("isFalling", false);

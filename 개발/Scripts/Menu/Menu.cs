@@ -18,12 +18,15 @@ public class Menu : MonoBehaviour
     int menu_no = 0;
     float v;
 
+    AudioSource Aud;
+
     // Start is called before the first frame update
     void Start()
     {
         START = GameObject.Find("START").GetComponent<Text>();
         CONTINUE = GameObject.Find("CONTINUE").GetComponent<Text>();
         END = GameObject.Find("END").GetComponent<Text>();
+        Aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,11 +39,13 @@ public class Menu : MonoBehaviour
             END.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowEnd;
                 menu_no = 2;
             }
             else if(Input.GetKeyDown(KeyCode.DownArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowContinue;
                 menu_no = 1;
             }
@@ -52,11 +57,13 @@ public class Menu : MonoBehaviour
             END.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowStart;
                 menu_no = 0;
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowEnd;
                 menu_no = 2;
             }
@@ -68,11 +75,13 @@ public class Menu : MonoBehaviour
             START.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowContinue;
                 menu_no = 1;
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                Aud.Play();
                 Left.rectTransform.position = ArrowStart;
                 menu_no = 0;
             }
@@ -80,6 +89,7 @@ public class Menu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            Aud.Play();
             if(menu_no == 0)
             {
                 SceneManager.LoadScene("LoadingScene");
