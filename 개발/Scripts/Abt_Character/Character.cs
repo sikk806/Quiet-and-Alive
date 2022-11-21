@@ -70,10 +70,14 @@ public class Character : MonoBehaviour
         }
         // Scene 이름 가져오기
         SceneName = SceneManager.GetActiveScene().name;
-       /* if (SceneName == "QsRoom")
+        if (SceneName == "QsRoom")
         {
-            stop = false;
-        }*/
+            transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
         
         // horizontal 입력 받아서 움직이는 코드
         keep_h = h;
