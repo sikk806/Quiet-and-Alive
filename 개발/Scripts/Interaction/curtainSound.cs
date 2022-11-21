@@ -29,6 +29,7 @@ public class curtainSound : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking)
         {
+            StartCoroutine(Sound());
             GameCharacter.talking = true;
             if (dialoguePanel.activeInHierarchy)
             {
@@ -98,7 +99,7 @@ public class curtainSound : MonoBehaviour
             zeroText();
         }
     }
-    public IEnumerator InBodyWait()
+    public IEnumerator Sound()
     {
         Aud.Play();
         yield return new WaitForSeconds(1.0f);

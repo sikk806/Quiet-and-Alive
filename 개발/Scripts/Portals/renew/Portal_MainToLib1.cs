@@ -18,13 +18,16 @@ public class Portal_MainToLib1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerIsClose == true)
+        if (Input.GetKeyDown(KeyCode.Z) && playerIsClose)
         {
-            if (player != null)
+            if (playerIsClose == true)
             {
-                PlayerRePosition();
+                if (player != null)
+                {
+                    PlayerRePosition();
+                }
+                LoadScene();
             }
-            LoadScene();
         }
     }
 
