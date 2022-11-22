@@ -5,11 +5,13 @@ using UnityEngine;
 public class HoleGlitter : MonoBehaviour
 {
     public GameObject Hole;
-    public bool playerIsClose = false;
+    public GameObject Monster;
+    public bool hle = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class HoleGlitter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && hle)
         {
             Hole.SetActive(true);
         }

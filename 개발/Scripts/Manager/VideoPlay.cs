@@ -102,7 +102,7 @@ public class VideoPlay : MonoBehaviour
             PlayTheVid();
         }
         clipLength = (float)vidClip[clipNo].length;
-        yield return new WaitForSeconds(clipLength-0.8f);
+        yield return new WaitForSeconds(clipLength);
         FadeIn = true;
         if(HP.nowHp <= 0)
         {

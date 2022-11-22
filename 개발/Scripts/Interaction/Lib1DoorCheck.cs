@@ -29,7 +29,7 @@ public class Lib1DoorCheck : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking)
         {
             GameCharacter.talking = true;
-            AudioSource.Play();
+            StartCoroutine(Sound());
             if (dialoguePanel.activeInHierarchy)
             {
                 zeroText();
@@ -97,5 +97,12 @@ public class Lib1DoorCheck : MonoBehaviour
             GameCharacter.talking = false;
             zeroText();
         }
+    }
+
+    public IEnumerator Sound()
+    {
+        AudioSource.Play();
+        yield return new WaitForSeconds(1.0f);
+        AudioSource.Play();
     }
 }

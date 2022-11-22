@@ -25,8 +25,10 @@ public class Monster : MonoBehaviour
     private HP HP;
 
     SpriteRenderer spriteRenderer;
+    HoleGlitter Hole;
     Character GameCharacter;
     Animator anim;
+    AudioSource Aud;
 
     void Awake()
     {
@@ -38,6 +40,8 @@ public class Monster : MonoBehaviour
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         HP = GameObject.Find("HP").GetComponent<HP>();
+        Hole = GameObject.Find("2F_HOLE").GetComponent<HoleGlitter>();
+        Aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -157,13 +161,18 @@ public class Monster : MonoBehaviour
             zeroText();
             if (talked)
             {
-                Invoke("waitChangeStance", 4.0f);
+                talked = false;
+                GameCharacter.stop = true;
+                Aud.Play();
+                Invoke("waitChangeStance", 2.3f);
             }
         }
     }
 
     void waitChangeStance()
     {
+        GameCharacter.stop = false;
+        Hole.hle = true;
         chasing = true;
     }
 }

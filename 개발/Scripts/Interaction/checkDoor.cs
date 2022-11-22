@@ -19,12 +19,14 @@ public class checkDoor : MonoBehaviour
     public bool playerIsClose;
 
     Character GameCharacter;
+    AudioSource AudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         rigid = GameObject.Find("Character").GetComponent<Rigidbody2D>();
+        AudioSource = GetComponent<AudioSource>();
 
     }
 
@@ -89,6 +91,7 @@ public class checkDoor : MonoBehaviour
         {
             GameCharacter.talking = true;
             dialoguePanel.SetActive(true);
+            AudioSource.Play();
             StartCoroutine(Typing());
         }
     }

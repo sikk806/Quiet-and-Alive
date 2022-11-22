@@ -331,7 +331,7 @@ public class Character : MonoBehaviour
     public IEnumerator waitforsec()
     {
         rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        yield return new WaitForSeconds(7.95f);
+        yield return new WaitForSeconds(5.0f);
 
         anim.SetBool("isLib", true);
         yield return new WaitForSeconds(2.0f);
@@ -342,7 +342,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator InBodyWait()
     {
-        yield return new WaitForSeconds(7.5f);
+        yield return new WaitForSeconds(8.0f);
         anim.SetBool("isFalling", true);
         //stop = false;
     }

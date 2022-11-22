@@ -8,11 +8,13 @@ public class Portal_MainToLib1 : MonoBehaviour
 
     private bool playerIsClose;
     public Character player;
+    VideoPlay VideoPlay;
 
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Character>();
+        VideoPlay = GameObject.Find("VideoController").GetComponent<VideoPlay>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class Portal_MainToLib1 : MonoBehaviour
         {
             if (playerIsClose == true)
             {
+                VideoPlay.waitTime = true;
                 if (player != null)
                 {
                     PlayerRePosition();
