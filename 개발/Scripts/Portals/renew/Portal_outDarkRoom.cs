@@ -24,7 +24,7 @@ public class Portal_outDarkRoom : MonoBehaviour
     {
         if (playerIsClose)
         {
-            StartCoroutine(rePosition());
+            rePosition();
             playerIsClose = false;
         }
     }
@@ -39,24 +39,22 @@ public class Portal_outDarkRoom : MonoBehaviour
 
 
 
-    private IEnumerator rePosition()
+    private void rePosition()
     {
         Character.anim.SetBool("JumpMap", false);
-        Character.transform.position = new Vector3(x[0], y[0], 1.0f);
-        yield return new WaitForSeconds(2.0f);
         if (CompareTag("ThroatToBody"))
         {
-            PortalNo = 1;
+            PortalNo = 0;
             Character.anim.SetBool("JumpMap", true);
         }
         else if (CompareTag("BodyToVisera"))
         {
-            PortalNo = 2;
+            PortalNo = 1;
             Character.transform.localScale = new Vector3(0.7f, 0.7f, 1.0f);
         }
         else if (CompareTag("ViseraToHeart"))
         {
-            PortalNo = 3;
+            PortalNo = 2;
             Heart.SetActive(false);
         }
         Character.transform.position = new Vector2(x[PortalNo], y[PortalNo]);

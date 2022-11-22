@@ -6,6 +6,7 @@ public class fireFly : MonoBehaviour
 {
     public float circleR; // 반지름
     public float deg; // 각도
+    private float degSum;
     public float objSpeed; // 원운동 속도
     public float RBspeed = 0.05f;
 
@@ -26,6 +27,7 @@ public class fireFly : MonoBehaviour
         if (fly)
         {
             deg += Time.deltaTime * objSpeed;
+            degSum += Time.deltaTime * objSpeed;
             if (deg < 360)
             {
                 var rad = -Mathf.Deg2Rad * (deg);
@@ -38,5 +40,12 @@ public class fireFly : MonoBehaviour
                 deg = 0;
             }
         }
+
+        if(degSum >= 540.0f)
+        {
+            degSum = 545.0f;
+            transform.position = new Vector3(transform.position.x, transform.position.y, 12.0f);
+        }
+        
     }
 }
