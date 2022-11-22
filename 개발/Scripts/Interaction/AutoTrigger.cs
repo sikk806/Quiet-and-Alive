@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Worm1 : MonoBehaviour
+public class AutoTrigger : MonoBehaviour
 {
     public GameObject dialoguePanel;
-    public GameObject Worm;
     public Text dialogueText;
     public string[] dialogue;
 
-    private Collider2D WormCollider;
+    private Collider2D TriggerCollider;
     private int index;
     private bool waitSecond = false;
 
     public float wordSpeed;
-
-    bool playerIsClose = false;
+    public bool playerIsClose;
 
     Character GameCharacter;
-    ThrowBooks throwBooks;
 
     // Start is called before the first frame update
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
-        throwBooks = GameObject.Find("Books").GetComponent<ThrowBooks>();
-        WormCollider = gameObject.GetComponent<Collider2D>();
+        TriggerCollider = gameObject.GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerIsClose && !GameCharacter.talking)
@@ -71,14 +66,6 @@ public class Worm1 : MonoBehaviour
         }
     }
 
-    IEnumerator ThrowBooks()
-    {
-        WormCollider.enabled = false;
-        yield return new WaitForSeconds(3.0f);
-        throwBooks.endTalk = true;
-        //throwBooks.endTalk = true;
-    }
-
     public void NextLine()
     {
         if (index < dialogue.Length - 1)
@@ -89,15 +76,15 @@ public class Worm1 : MonoBehaviour
         }
         else
         {
+            TriggerCollider.enabled = false;
             GameCharacter.talking = false;
             zeroText();
-            StartCoroutine(ThrowBooks());
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             playerIsClose = true;
         }
@@ -107,6 +94,7 @@ public class Worm1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            TriggerCollider.enabled = false;
             playerIsClose = false;
             GameCharacter.talking = false;
             zeroText();

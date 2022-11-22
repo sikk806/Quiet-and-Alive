@@ -9,7 +9,6 @@ public class ThrowBooks : MonoBehaviour
 
     int ranNum;
     bool checkTime = false;
-    bool DoOnce = false;
     public bool endTalk = false;
     public float throwSpeed;
     public GameObject book;
@@ -31,36 +30,30 @@ public class ThrowBooks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (endTalk && Character.anim.GetBool("JumpMap")) 
         {
-            temp = Instantiate(book);
-            Destroy(temp, 4.0f);
-            temp.transform.position = gameObject.transform.position;
-            goal = Character.transform.position - transform.position;
-            goal = goal.normalized;
-            bookRB = temp.GetComponent<Rigidbody2D>();
-        }
-        if (temp != null)
-        {
-            bookRB.velocity = goal * throwSpeed;
-            //goal = new Vector2(0, 1);
-
-            //temp.transform.position = Vector3.MoveTowards(temp.transform.position, goal, 0.5f);
-            /*if(temp.transform.position == goal)
+            if (!checkTime)
             {
-                Destroy(temp);
-            }*/
-
+                nowTime = Time.time;
+                checkTime = true;
+            }
+            else
+            {
+                if (Time.time - nowTime >= 2.0f)
+                {
+                    temp = Instantiate(book);
+                    Destroy(temp, 4.0f);
+                    temp.transform.position = gameObject.transform.position;
+                    goal = Character.transform.position - transform.position;
+                    goal = goal.normalized;
+                    bookRB = temp.GetComponent<Rigidbody2D>();
+                    checkTime = false;
+                }
+            }
+            if (temp != null)
+            {
+                bookRB.velocity = goal * throwSpeed;
+            }
         }
     }
-   /* private void throwBook()
-    {
-        var temp = Instantiate(book);
-        temp.transform.position = gameObject.transform.position;
-    }
-
-    /*public IEnumerator waitforsec(book)
-    {
-        yield return new WaitForSeconds(2.1f);
-    } */
 }
