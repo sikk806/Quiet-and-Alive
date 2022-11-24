@@ -17,11 +17,10 @@ public class MovingDarkRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movingSpot = transform.position;
         if (go)
         {
             transform.position = Vector3.MoveTowards(transform.position, spot[1], speed);
-            if (movingSpot == spot[1])
+            if (transform.position == spot[1])
             {
                 go = false;
             }
@@ -29,14 +28,14 @@ public class MovingDarkRoom : MonoBehaviour
         else
         {
             transform.position = Vector3.MoveTowards(transform.position, spot[0], speed);
-            if (movingSpot == spot[0])
+            if (transform.position == spot[0])
             {
                 go = true;
             }
         }
     }
 }
-
+/*
 void OnTriggerEnter2D(Collider2D other)
 {
     if (other.CompareTag("Player"))
@@ -51,4 +50,4 @@ void OnTriggerExit2D(Collider2D other)
     {
         other.transform.SetParent(null);
     }
-}
+}*/

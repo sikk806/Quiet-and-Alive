@@ -8,6 +8,8 @@ public class AudioPlay : MonoBehaviour
     public AudioClip[] audClip;
     public AudioSource audSource;
     Character Character;
+    bool doOnce = false;
+    bool change = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +21,16 @@ public class AudioPlay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Character.portalOnce)
+        if(Character.portalTwice && !change)
         {
             audSource.clip = audClip[1];
+            doOnce = false;
+            change = true;
         }
-        audSource.Play();
+        if (!doOnce)
+        {
+            audSource.Play();
+            doOnce = true;
+        }
     }
 }

@@ -18,15 +18,64 @@ public class curtainSound : MonoBehaviour
     Character GameCharacter;
     AudioSource Aud;
 
+    public float blinkSpeed;
+
+    private bool checkTime = false;
+    private bool dark = true;
+    private float timeCheck;
+
+    public GameObject Blink;
+    SpriteRenderer BlinkSr;
+    Color BlinkColor;
+
+    public bool check = false;
+
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         Aud = GetComponent<AudioSource>();
+        BlinkSr = Blink.GetComponent<SpriteRenderer>();
+        BlinkColor = BlinkSr.color;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!checkTime)
+        {
+            timeCheck = Time.time;
+            checkTime = true;
+        }
+        else
+        {
+            if (Time.time - timeCheck >= 0.1)
+            {
+                if (BlinkColor.a > 0.0f && dark)
+                {
+                    BlinkColor.a -= blinkSpeed;
+                    BlinkSr.color = BlinkColor;
+                }
+                else if (BlinkColor.a <= 0.0f && dark)
+                {
+                    BlinkColor.a = 0.0f;
+                    BlinkSr.color = BlinkColor;
+                    dark = false;
+                }
+                if (BlinkColor.a < 0.8f && !dark)
+                {
+                    BlinkColor.a += blinkSpeed;
+                    BlinkSr.color = BlinkColor;
+                }
+                else if (BlinkColor.a >= 0.8f && !dark)
+                {
+                    BlinkColor.a = 0.8f;
+                    BlinkSr.color = BlinkColor;
+                    dark = true;
+                }
+
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking)
         {
             StartCoroutine(Sound());
@@ -77,6 +126,7 @@ public class curtainSound : MonoBehaviour
         }
         else
         {
+            check = true;
             GameCharacter.talking = false;
             zeroText();
         }
@@ -86,6 +136,7 @@ public class curtainSound : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Blink.SetActive(true);
             playerIsClose = true;
         }
     }
@@ -94,6 +145,7 @@ public class curtainSound : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Blink.SetActive(false);
             playerIsClose = false;
             GameCharacter.talking = false;
             zeroText();

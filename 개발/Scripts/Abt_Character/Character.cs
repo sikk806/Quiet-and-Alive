@@ -15,6 +15,7 @@ public class Character : MonoBehaviour
     public GameObject ActiveObject;
     public GameObject Portal;
     public GameObject Monster;
+    public GameObject FallMon;
 
     public bool talking = false; // 대화중에는 방향키 금지
     public bool pressJump = false; // 더블 점프 방지 , 사다리에서 점프 방지
@@ -27,7 +28,7 @@ public class Character : MonoBehaviour
     public float jumpPower;
 
     private string SceneName = "";
-    private bool jumping = false; // 한쪽 방향으로만 점프 유지
+    public bool jumping = false; // 한쪽 방향으로만 점프 유지
     private bool overJump = false; // 쯔꾸르 떨어지면서 점프 시작 방지
     private float jumpTime = 0; // Jump 시간 측정
     private float origin_Y;
@@ -41,6 +42,7 @@ public class Character : MonoBehaviour
     SpriteRenderer spriteRenderer;
     AudioSource AudioSource;
     VideoPlay VideoPlay;
+    Mosnter1F fallingMonster;
 
 
     void Awake()
@@ -173,12 +175,12 @@ public class Character : MonoBehaviour
             }
 
             // 위 / 아래
-            if ((rigid.velocity.y) > 0 && !jumping)
+            if ((rigid.velocity.y) > 0.3 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkBack", true);
             }
-            else if ((rigid.velocity.y) < 0 && !jumping)
+            else if ((rigid.velocity.y) < -0.3 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkFront", true);
@@ -189,7 +191,7 @@ public class Character : MonoBehaviour
                 anim.SetBool("WalkFront", false);
             }
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
                 anim.SetBool("isJump", true);
                 //jumping = true;
@@ -290,7 +292,7 @@ public class Character : MonoBehaviour
                 rigid.velocity = new Vector2(0, v * 10);
             }
 
-            if (Input.GetButton("Jump") && overJump == false)
+            if (Input.GetButtonDown("Jump") && overJump == false)
             {
                 overJump = true;
                 jumping = true;
@@ -346,4 +348,6 @@ public class Character : MonoBehaviour
         anim.SetBool("isFalling", true);
         //stop = false;
     }
+
+    
 }

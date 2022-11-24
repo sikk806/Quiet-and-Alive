@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Worm1 : MonoBehaviour
 {
     public GameObject dialoguePanel;
+    public Image FaceImage;
     public GameObject Worm;
     public Text dialogueText;
     public string[] dialogue;
@@ -20,6 +22,10 @@ public class Worm1 : MonoBehaviour
 
     Character GameCharacter;
     ThrowBooks throwBooks;
+    AudioSource audSource;
+    Animator anim;
+    public Sprite[] Faces;
+    EP EP;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +33,9 @@ public class Worm1 : MonoBehaviour
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         throwBooks = GameObject.Find("Books").GetComponent<ThrowBooks>();
         WormCollider = gameObject.GetComponent<Collider2D>();
+        audSource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+        EP = GameObject.Find("EP").GetComponent<EP>();
     }
 
     // Update is called once per frame
@@ -34,6 +43,7 @@ public class Worm1 : MonoBehaviour
     {
         if (playerIsClose && !GameCharacter.talking)
         {
+            FaceImage.sprite = Faces[0];
             GameCharacter.talking = true;
             if (dialoguePanel.activeInHierarchy)
             {
@@ -74,8 +84,10 @@ public class Worm1 : MonoBehaviour
     IEnumerator ThrowBooks()
     {
         WormCollider.enabled = false;
+        EP.nowEp += 1;
         yield return new WaitForSeconds(3.0f);
         throwBooks.endTalk = true;
+        anim.SetBool("throw", true);
         //throwBooks.endTalk = true;
     }
 
@@ -86,6 +98,11 @@ public class Worm1 : MonoBehaviour
             index++;
             dialogueText.text = "";
             StartCoroutine(Typing());
+            if(index == 3)
+            {
+                anim.SetBool("angry", true);
+                audSource.Play();
+            }
         }
         else
         {

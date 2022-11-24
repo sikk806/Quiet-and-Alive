@@ -48,7 +48,7 @@ public class Monster : MonoBehaviour
     void Update()
     {
         
-        if(Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking && !doOnce)
+        if(playerIsClose && !GameCharacter.talking && !doOnce)
         {
             GameCharacter.talking = true;
             if(dialoguePanel.activeInHierarchy)

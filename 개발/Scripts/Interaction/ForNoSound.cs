@@ -17,14 +17,62 @@ public class ForNoSound : MonoBehaviour
 
     Character GameCharacter;
 
+    [Header("±ôºýÀÌ´Â ¼Óµµ(0~1)")]
+    public float blinkSpeed;
+
+    private bool checkTime = false;
+    private bool dark = true;
+    private float timeCheck;
+
+    public GameObject Blink;
+    SpriteRenderer BlinkSr;
+    Color BlinkColor;
+
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
+        BlinkSr = Blink.GetComponent<SpriteRenderer>();
+        BlinkColor = BlinkSr.color;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!checkTime)
+        {
+            timeCheck = Time.time;
+            checkTime = true;
+        }
+        else
+        {
+            if (Time.time - timeCheck >= 0.1)
+            {
+                if (BlinkColor.a > 0.0f && dark)
+                {
+                    BlinkColor.a -= blinkSpeed;
+                    BlinkSr.color = BlinkColor;
+                }
+                else if (BlinkColor.a <= 0.0f && dark)
+                {
+                    BlinkColor.a = 0.0f;
+                    BlinkSr.color = BlinkColor;
+                    dark = false;
+                }
+                if (BlinkColor.a < 0.8f && !dark)
+                {
+                    BlinkColor.a += blinkSpeed;
+                    BlinkSr.color = BlinkColor;
+                }
+                else if (BlinkColor.a >= 0.8f && !dark)
+                {
+                    BlinkColor.a = 0.8f;
+                    BlinkSr.color = BlinkColor;
+                    dark = true;
+                }
+
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Z) && playerIsClose && !GameCharacter.talking)
         {
             GameCharacter.talking = true;
@@ -84,6 +132,7 @@ public class ForNoSound : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerIsClose = true;
+            Blink.SetActive(true);
         }
     }
 
@@ -91,6 +140,7 @@ public class ForNoSound : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Blink.SetActive(false);
             playerIsClose = false;
             GameCharacter.talking = false;
             zeroText();

@@ -16,7 +16,8 @@ public class Mosnter1F : MonoBehaviour
 
     public float speed;
 
-    bool check = false;
+    private bool Attack = false;
+    public bool check = false;
     bool fall = true;
     bool opposite = false;
     public bool playerIsClose = false;
@@ -42,11 +43,12 @@ public class Mosnter1F : MonoBehaviour
         {
             if (fall)
             {
-                Vector2 right = new Vector2(Right.transform.position.x, Right.transform.position.y);
-                transform.position = Vector2.MoveTowards(transform.position, Right.transform.position, speed);
-                if (transform.position.y <= -6.5f)
+                Vector3 right = new Vector3(Right.transform.position.x, Right.transform.position.y, -3.0f);
+                transform.position = Vector3.MoveTowards(transform.position, Right.transform.position, speed);
+                if (transform.position.y <= -5.4f)
                 {
                     anim.SetBool("startFalling", false);
+                    Attack = true;
                 }
             }
             else
@@ -74,7 +76,7 @@ public class Mosnter1F : MonoBehaviour
                 else if(!character.anim.GetBool("isHide"))
                 {
                     speed = 0.1f;
-                    Vector3 chase = new Vector3(character.transform.position.x, transform.position.y, 3);
+                    Vector3 chase = new Vector3(character.transform.position.x, transform.position.y, -3.0f);
                     if(transform.position.x > character.transform.position.x)
                     {
                         spriteRenderer.flipX = false;
@@ -97,7 +99,6 @@ public class Mosnter1F : MonoBehaviour
 
     IEnumerator Falling()
     {
-        Debug.Log(Time.time);
         yield return new WaitForSeconds(5.0f);
         anim.SetBool("wait", false);
         anim.speed = 1.0f;
@@ -113,7 +114,7 @@ public class Mosnter1F : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Attack)
         {
             playerIsClose = true;
         }
@@ -121,6 +122,9 @@ public class Mosnter1F : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-
+        if (other.CompareTag("Player"))
+        {
+            playerIsClose = false;
+        }
     }
 }
