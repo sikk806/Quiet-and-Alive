@@ -22,7 +22,7 @@ public class MoveBone19 : MonoBehaviour
         movingSpot = transform.position;
         if(go)
         {
-            transform.position = Vector3.MoveTowards(transform.position, spot1, 0.02f);
+            transform.position = Vector3.MoveTowards(transform.position, spot1, 0.5f);
             if (movingSpot == spot1)
             {
                 go = false;
@@ -30,7 +30,7 @@ public class MoveBone19 : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, spot2, 0.02f);
+            transform.position = Vector3.MoveTowards(transform.position, spot2, 0.5f);
             if (movingSpot == spot2)
             {
                 go = true;

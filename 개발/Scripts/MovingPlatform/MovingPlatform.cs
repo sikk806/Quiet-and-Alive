@@ -29,7 +29,7 @@ public class MovingPlatform : MonoBehaviour
         {
             if (step == 0)
             {
-                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.5f);
                 if(movingSpot == spot1)
                 {
                     step = 1;
@@ -37,7 +37,7 @@ public class MovingPlatform : MonoBehaviour
             }
             else if(step == 1)
             {
-                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.5f);
                 if (movingSpot == spot2)
                 {
                     step = 2;
@@ -45,7 +45,7 @@ public class MovingPlatform : MonoBehaviour
             }
             else if(step == 2)
             {
-                transform.position = Vector2.MoveTowards(transform.position, spot3, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, spot3, 0.5f);
                 if (movingSpot == spot3)
                 {
                     step = 0;
@@ -57,7 +57,7 @@ public class MovingPlatform : MonoBehaviour
         {
             if (step == 0)
             {
-                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, spot2, 0.5f);
                 if (movingSpot == spot2)
                 {
                     step = 1;
@@ -65,7 +65,7 @@ public class MovingPlatform : MonoBehaviour
             }
             else if (step == 1)
             {
-                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, spot1, 0.5f);
                 if (movingSpot == spot1)
                 {
                     step = 2;
@@ -73,7 +73,7 @@ public class MovingPlatform : MonoBehaviour
             }
             else if (step == 2)
             {
-                transform.position = Vector2.MoveTowards(transform.position, startSpot, 0.02f);
+                transform.position = Vector2.MoveTowards(transform.position, startSpot, 0.5f);
                 if (movingSpot == startSpot)
                 {
                     step = 0;

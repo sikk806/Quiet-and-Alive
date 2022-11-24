@@ -11,8 +11,8 @@ public class Portal_DarkRoom : MonoBehaviour
     fireFly fireFly;
 
     // DarkRoom, BoneStart, MazeStart, HeartStart
-    float[] x = { 407.7f, 383.14f, 251.5f };
-    float[] y = { -82.2f, -179.68f, -169.0f };
+    float[] x = { 407.7f, 345.7f, 251.5f };
+    float[] y = { -82.2f, -232.2f, -169.0f };
 
     // Start is called before the first frame update
     void Start()

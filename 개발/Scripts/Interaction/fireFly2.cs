@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fireFly : MonoBehaviour
+public class fireFly2 : MonoBehaviour
 {
     public float circleR; // 반지름
     public float deg; // 각도
@@ -17,7 +17,6 @@ public class fireFly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(410.31f, -83.0f, 4.0f);
         fireflyRB.velocity = RBspeed * new Vector2(1.0f, 0.0f);
     }
 

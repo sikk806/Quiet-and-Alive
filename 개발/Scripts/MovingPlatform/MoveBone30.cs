@@ -26,7 +26,7 @@ public class MoveBone30 : MonoBehaviour
         {
             if (spot == 0)
             {
-                transform.position = Vector3.MoveTowards(transform.position, middleSpot, 0.02f);
+                transform.position = Vector3.MoveTowards(transform.position, middleSpot, 0.5f);
                 if (movingSpot == middleSpot)
                 {
                     spot = 1;
@@ -34,7 +34,7 @@ public class MoveBone30 : MonoBehaviour
             }
             else if (spot == 1)
             {
-                transform.position = Vector3.MoveTowards(transform.position, spot1, 0.02f);
+                transform.position = Vector3.MoveTowards(transform.position, spot1, 0.5f);
                 if (movingSpot == spot1)
                 {
                     go = false;
@@ -46,7 +46,7 @@ public class MoveBone30 : MonoBehaviour
         {
             if (spot == 0)
             {
-                transform.position = Vector3.MoveTowards(transform.position, middleSpot, 0.02f);
+                transform.position = Vector3.MoveTowards(transform.position, middleSpot, 0.5f);
                 if (movingSpot == middleSpot)
                 {
                     spot = 1;
@@ -54,7 +54,7 @@ public class MoveBone30 : MonoBehaviour
             }
             else if (spot == 1)
             {
-                transform.position = Vector3.MoveTowards(transform.position, spot2, 0.02f);
+                transform.position = Vector3.MoveTowards(transform.position, spot2, 0.5f);
                 if (movingSpot == spot2)
                 {
                     go = true;

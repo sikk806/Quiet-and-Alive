@@ -24,6 +24,19 @@ public class Talk18 : MonoBehaviour
     public Sprite[] Faces;
     public GameObject Worm;
     Animator WormAnim;
+    EP EP;
+
+    fireFly2 FF1;
+    fireFly2 FF2;
+    fireFly2 FF3;
+    fireFly2 FF4;
+    fireFly2 FF5;
+    fireFly2 FF6;
+    fireFly2 FF7;
+    fireFly2 FF8;
+    fireFly2 FF9;
+    fireFly2 FF10;
+    fireFly2 FF11;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +44,18 @@ public class Talk18 : MonoBehaviour
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         TriggerCollider = gameObject.GetComponent<Collider2D>();
         WormAnim = Worm.GetComponent<Animator>();
+        EP = GameObject.Find("EP").GetComponent<EP>();
+        FF1 = GameObject.Find("fireFly (1)").GetComponent<fireFly2>();
+        FF2 = GameObject.Find("fireFly (2)").GetComponent<fireFly2>();
+        FF3 = GameObject.Find("fireFly (3)").GetComponent<fireFly2>();
+        FF4 = GameObject.Find("fireFly (4)").GetComponent<fireFly2>();
+        FF5 = GameObject.Find("fireFly (5)").GetComponent<fireFly2>();
+        FF6 = GameObject.Find("fireFly (6)").GetComponent<fireFly2>();
+        FF7 = GameObject.Find("fireFly (7)").GetComponent<fireFly2>();
+        FF8 = GameObject.Find("fireFly (8)").GetComponent<fireFly2>();
+        FF9 = GameObject.Find("fireFly (9)").GetComponent<fireFly2>();
+        FF10 = GameObject.Find("fireFly (10)").GetComponent<fireFly2>();
+        FF11 = GameObject.Find("fireFly (11)").GetComponent<fireFly2>();
     }
 
     void Update()
@@ -83,6 +108,17 @@ public class Talk18 : MonoBehaviour
             if (index == 1)
             {
                 WormAnim.SetBool("Angry", true);
+                FF1.fly = true;
+                FF2.fly = true;
+                FF3.fly = true;
+                FF4.fly = true;
+                FF5.fly = true;
+                FF6.fly = true;
+                FF7.fly = true;
+                FF8.fly = true;
+                FF9.fly = true;
+                FF10.fly = true;
+                FF11.fly = true;
                 FaceImage.sprite = Faces[1];
             }
             dialogueText.text = "";
@@ -91,6 +127,7 @@ public class Talk18 : MonoBehaviour
         else
         {
             Door.SetActive(true);
+            EP.nowEp += 1;
             TriggerCollider.enabled = false;
             GameCharacter.talking = false;
             zeroText();
