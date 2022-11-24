@@ -146,6 +146,40 @@ public class Character : MonoBehaviour
         }
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
+            if (pressJump == false)
+            {
+                rigid.gravityScale = 0;
+            }
+            if (h != 0)
+            {
+                rigid.velocity = new Vector2(h * 10, 0);
+            }
+            else
+            {
+                rigid.velocity = new Vector2(0, v * 10);
+            }
+
+            if (Input.GetButtonDown("Jump") && overJump == false)
+            {
+                overJump = true;
+                jumping = true;
+                pressJump = true;
+            }
+
+            if (jumping)
+            {
+                rigid.gravityScale = -100.0f;
+                jumpTime += Time.deltaTime;
+                rigid.gravityScale += jumpTime * 200.0f;
+            }
+
+            if (rigid.gravityScale >= 98.0f)
+            {
+                jumping = false;
+                jumpTime = 0.0f;
+                overJump = false;
+                pressJump = false;
+            }
             anim.SetBool("IB", true);
             // 도서관 에서의 Jump 삭제
             /*anim.SetBool("isJump", false);*/
@@ -175,12 +209,12 @@ public class Character : MonoBehaviour
             }
 
             // 위 / 아래
-            if ((rigid.velocity.y) > 0.3 && !jumping)
+            if ((rigid.velocity.y) > 0 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkBack", true);
             }
-            else if ((rigid.velocity.y) < -0.3 && !jumping)
+            else if ((rigid.velocity.y) < 0 && !jumping)
             {
                 anim.SetBool("isWalk", false);
                 anim.SetBool("WalkFront", true);
@@ -279,7 +313,7 @@ public class Character : MonoBehaviour
     {
         if (SceneName == "In_Body" || SceneName == "MirrorPlace")
         {
-            if (pressJump == false)
+            /*if (pressJump == false)
             {
                 rigid.gravityScale = 0;
             }
@@ -312,7 +346,7 @@ public class Character : MonoBehaviour
                 jumpTime = 0.0f;
                 overJump = false;
                 pressJump = false;
-            }
+            }*/
         }
         else
         {

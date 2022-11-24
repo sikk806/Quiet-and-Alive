@@ -19,6 +19,7 @@ public class HP : MonoBehaviour
     void Start()
     {
         hp.value = (float)nowHp / (float)maxHp;
+        nowHp = 100;
     }
 
     // Update is called once per frame

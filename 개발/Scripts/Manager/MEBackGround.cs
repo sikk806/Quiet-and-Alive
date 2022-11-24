@@ -29,7 +29,7 @@ public class MEBackGround : MonoBehaviour
                 EP.SetActive(true);
                 doOnce = true;
             }
-            BG.rectTransform.sizeDelta = new Vector2(176.2386f, 44.6356f);
+            BG.rectTransform.sizeDelta = new Vector2(176.2386f, 50.6356f);
         }
         else
         {

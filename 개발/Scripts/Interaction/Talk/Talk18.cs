@@ -22,12 +22,15 @@ public class Talk18 : MonoBehaviour
     Character GameCharacter;
 
     public Sprite[] Faces;
+    public GameObject Worm;
+    Animator WormAnim;
 
     // Start is called before the first frame update
     void Start()
     {
         GameCharacter = GameObject.Find("Character").GetComponent<Character>();
         TriggerCollider = gameObject.GetComponent<Collider2D>();
+        WormAnim = Worm.GetComponent<Animator>();
     }
 
     void Update()
@@ -79,6 +82,7 @@ public class Talk18 : MonoBehaviour
             index++;
             if (index == 1)
             {
+                WormAnim.SetBool("Angry", true);
                 FaceImage.sprite = Faces[1];
             }
             dialogueText.text = "";
