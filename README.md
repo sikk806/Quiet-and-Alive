@@ -11,7 +11,7 @@
 
 ### <img src="https://img.shields.io/badge/unity-000000?style=flat-square&logo=unity&logoColor=FFFFFF"/><img src="https://img.shields.io/badge/c%23-239120?style=flat-square&logo=c-sharp&logoColor=FFFFFF"/>
 
-## 🗓 Schedule 🗓
+## 🗓 How To Play 🗓
 
 | Action | KeyBoard |
 | ----- | ----- |
