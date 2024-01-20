@@ -13,12 +13,13 @@
 
 ## 🗓 Schedule 🗓
 
-| Week | To Do | check |
-| ----- | ----- | ----- |
-| 1 | Something | ✅ |
+| Action | KeyBoard |
+| ----- | ----- |
+| Right | [Right arrow] |
+| Left | [Left arrow] |
+| Up | [Up arrow] |
+| Down | [Down arrow] |
+| Jump | [Space] |
+| Interaction | [Z] |
 
-'-'를 길게 쓰면
----------------------------------------------------
-줄이 생긴다!!!
 
-__GitHub 웹에서 대략적인 사용 방법은 HowTo.md를 확인해주세요__
