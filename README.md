@@ -5,7 +5,7 @@
 ### <img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=FFFFFF"/>
 (https://github.com/sikk806/Quiet-and-Alive)
 ### <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion&logoColor=FFFFFF"/>
-(https://www.notion.so/9cad4d0c61134633a1bb2ed481ebc321?v=a52ede821e9a4fada97777701f801a26)
+(https://www.notion.so/fcf439514b1b44ea89575eff79797cdd?v=6213fd57691c434794db715c23355189&pvs=4)
 
 ## ⚒️ Tools ⚒️
 
