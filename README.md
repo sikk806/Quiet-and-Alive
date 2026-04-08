@@ -1,25 +1,132 @@
-
-  
 # 🤫 Quiet-and-Alive 🤫
-
+ 
 ### <img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=FFFFFF"/>
 (https://github.com/sikk806/Quiet-and-Alive)
 ### <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion&logoColor=FFFFFF"/>
 (https://www.notion.so/fcf439514b1b44ea89575eff79797cdd?v=6213fd57691c434794db715c23355189&pvs=4)
-
-## ⚒️ Tools ⚒️
-
-### <img src="https://img.shields.io/badge/unity-000000?style=flat-square&logo=unity&logoColor=FFFFFF"/><img src="https://img.shields.io/badge/c%23-239120?style=flat-square&logo=c-sharp&logoColor=FFFFFF"/>
-
-## 🗓 How To Play 🗓
-
-| Action | KeyBoard |
-| ----- | ----- |
-| Right | [Right arrow] |
-| Left | [Left arrow] |
-| Up | [Up arrow] |
-| Down | [Down arrow] |
-| Jump | [Space] |
-| Interaction | [Z] |
+ 
+---
+ 
+## 📖 게임 소개
+ 
+**Quiet-and-Alive**는 낡은 도서관을 배경으로 한 미스터리 어드벤처 게임입니다.
+주인공 Q는 도서관을 탐색하다 책 속으로 빨려 들어가고, 그 안에서 이상한 신체 세계를 마주하게 됩니다.
+ 
+- **도서관(Library)** : 2D 횡스크롤 플랫포머. 몬스터를 피해 단서를 모으고 책을 찾아야 합니다.
+- **책속세상(In Body)** : 중력이 사라진 4방향 자유 이동 공간. 도서관과는 전혀 다른 조작감과 규칙이 적용됩니다.
+ 
+---
+ 
+## 🎮 조작법
+ 
+### 🏛️ 도서관 (Library)
+ 
+| 액션 | 키 |
+| --- | --- |
+| 좌/우 이동 | `← →` 방향키 |
+| 점프 | `Space` |
+| 사다리 오르기 / 내려가기 | `↑ ↓` 방향키 |
+| 상호작용 / 숨기 | `Z` |
+ 
+### 📚 책속세상 (In Body)
+ 
+| 액션 | 키 |
+| --- | --- |
+| 4방향 이동 | `← → ↑ ↓` 방향키 |
+| 위로 떠오르기 | `Space` |
+| 상호작용 | `Z` |
+ 
+> 📌 **차이점**: 도서관은 중력이 적용되는 2D 플랫포머이며, 책속세상은 중력이 없는 탑다운 형식입니다.
+> 책속세상에서는 좌우 입력이 우선되며, 좌우 이동이 없을 때만 상하 이동이 가능합니다.
+ 
+---
+ 
+## 🗺️ 게임 구조
+ 
+```
+메인 타이틀
+└── 도서관 1층 (Library1)
+    ├── 도서관 2층 (Library1_2F)
+    └── 책속세상 진입 (In_Body)
+        ├── 목구멍 (Throat)
+        ├── 몸속 (Body)
+        │   ├── 내장 (Viscera) 1~3
+        │   └── 심장 (Heart)
+        ├── 미로 (Maze)
+        ├── 어두운 방 (DarkRoom)
+        └── 거울 공간 (MirrorPlace)
+```
+ 
+---
+ 
+## ⚙️ 주요 시스템
+ 
+### ❤️ HP / EP
+- **HP** : 최대 100. 몬스터에게 피해를 받으면 감소하며, 0이 되면 게임 오버 후 타이틀로 복귀합니다.
+- **EP** : 최대 3. 책속세상(In_Body)에서 활성화되는 별도의 게이지입니다.
+ 
+### 👾 몬스터 & 은신
+- 도서관에는 플레이어를 쫓는 몬스터가 존재합니다.
+- 특정 오브젝트(커튼 등) 근처에서 `Z` 키를 눌러 **숨기**가 가능합니다.
+- 숨는 동안 이동이 제한되며, 키를 떼면 즉시 노출됩니다.
+ 
+### 🚪 포탈
+- 씬 간 이동은 포탈을 통해 이루어집니다.
+- 도서관 ↔ 책속세상, 층 간 이동, 각 신체 구역 간 이동 등 다양한 포탈이 존재합니다.
+ 
+### 🎬 영상 연출
+- 주요 장면(책속세상 진입, 몬스터 등장 등)에서 영상 컷씬이 재생됩니다.
+ 
+---
+ 
+## 📁 폴더 구조
+ 
+```
+Quiet-and-Alive/
+├── 개발/
+│   ├── Character/          # 캐릭터 애니메이션 (도서관용 / 책속세상용 분리)
+│   ├── Font/               # Galmuri 폰트 등
+│   ├── Scripts/
+│   │   ├── Abt_Character/  # 플레이어, 몬스터 이동 및 동작
+│   │   ├── Interaction/    # 사다리, 문, 숨기, 대화 등 상호작용
+│   │   ├── Manager/        # HP, EP, 오디오, 영상, 게임오버 등 관리
+│   │   ├── Menu/           # 타이틀/메뉴 화면
+│   │   ├── MovingPlatform/ # 이동 발판 (뼈 발판 등)
+│   │   └── Portals/        # 씬 전환 포탈
+│   ├── Sprite/             # 거울 등 특수 스프라이트
+│   └── 실행 파일/           # 빌드 결과물
+│
+├── 기획/
+│   ├── 공간기획/            # 각 구역별 맵 기획 이미지
+│   └── 시스템 기획/         # (추후 업로드 예정)
+│
+├── 아트/
+│   ├── 1.도서관1/           # 도서관 배경 및 캐릭터 원화
+│   ├── 2.신체증상/          # 책속세상 배경 원화
+│   ├── Q/                  # 주인공 Q 원화
+│   ├── UI/                 # UI 디자인
+│   ├── 영상/               # 컷씬 영상 소스
+│   ├── 마지막/              # 엔딩 관련 아트
+│   └── 찐막/               # 최종 엔딩 아트
+│
+├── AudioNVideo/
+│   ├── Opening/            # 오프닝 이미지 시퀀스 및 애니메이션
+│   └── *.mp3 / *.wav       # BGM 및 효과음
+│
+└── HowTo.md                # GitHub 협업 가이드 (파일 업로드/삭제/폴더 관리)
+```
+ 
+---
+ 
+## 🎵 사용된 에셋
+ 
+| 에셋 | 출처 |
+| --- | --- |
+| Echoes of Time | Kevin MacLeod |
+| UFO Sounds | RalphFurly (Freesound, ID-403183) |
+| Creepy Laugh Sound | - |
+| 폰트 | Galmuri (공개 라이선스) |
+ 
+---
 
 
